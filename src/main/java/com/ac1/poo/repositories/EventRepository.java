@@ -53,12 +53,18 @@ public class EventRepository {
         Event aux = getEventById(event.getId()).get();
         if(aux!=null)
         {
-            aux.setDescription(event.getDescription());
-            aux.setStart_date(event.getStart_date());
-            aux.setStart_time(event.getStart_time());
-            aux.setEnd_date(event.getEnd_date());
-            aux.setEnd_time(event.getEnd_time());
-            aux.setPlace(event.getPlace());
+            if(event.getDescription()!=null)
+                aux.setDescription(event.getDescription());
+            if(event.getStart_date()!=null)    
+                aux.setStart_date(event.getStart_date());
+            if(event.getStart_time()!=null)
+                aux.setStart_time(event.getStart_time());
+            if(event.getEnd_date()!=null)    
+                aux.setEnd_date(event.getEnd_date());
+            if(event.getEnd_time()!=null)    
+                aux.setEnd_time(event.getEnd_time());
+            if(event.getPlace()!=null)
+                aux.setPlace(event.getPlace());
         }
         return aux;
     }
