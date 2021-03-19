@@ -48,4 +48,8 @@ public class EventService {
         getEventById(event.getId());
         return repo.update(event);
     }
+    public void removerById(long id)
+    {
+            repo.delete(getEventById(id));       
+    } 
 }

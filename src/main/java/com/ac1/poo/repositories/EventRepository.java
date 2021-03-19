@@ -62,4 +62,8 @@ public class EventRepository {
         }
         return aux;
     }
+    public void delete(Event event)
+    {
+            events.remove(event);
+    }
 }

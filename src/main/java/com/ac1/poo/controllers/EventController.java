@@ -11,6 +11,7 @@ import com.ac1.poo.services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -60,6 +61,12 @@ public ResponseEntity<Event> update(@RequestBody EventDTO eventDTO,
   event.setId(id);
   event = service.update(event);
   return ResponseEntity.ok(event); 
+}
+@DeleteMapping("/{id}")
+public ResponseEntity<Void> remover(@PathVariable long id)
+{
+    service.removerById(id);
+    return ResponseEntity.noContent().build();
 }
 }
 
