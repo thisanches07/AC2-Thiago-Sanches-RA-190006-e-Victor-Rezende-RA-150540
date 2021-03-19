@@ -48,4 +48,18 @@ public class EventRepository {
     public List<Event> getEvents() {
         return events;
     }
+    public Event update(Event event)
+    {
+        Event aux = getEventById(event.getId()).get();
+        if(aux!=null)
+        {
+            aux.setDescription(event.getDescription());
+            aux.setStart_date(event.getStart_date());
+            aux.setStart_time(event.getStart_time());
+            aux.setEnd_date(event.getEnd_date());
+            aux.setEnd_time(event.getEnd_time());
+            aux.setPlace(event.getPlace());
+        }
+        return aux;
+    }
 }

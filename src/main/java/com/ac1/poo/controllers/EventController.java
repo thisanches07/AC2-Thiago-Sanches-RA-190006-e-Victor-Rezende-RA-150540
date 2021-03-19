@@ -14,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -50,6 +51,15 @@ public class EventController {
 public ResponseEntity<Event> getEventById(@PathVariable long id){
   Event event = service.getEventById(id);
   return ResponseEntity.ok(event);
+}
+@PutMapping("/{id}")
+public ResponseEntity<Event> update(@RequestBody EventDTO eventDTO,
+                                    @PathVariable long id)
+{
+  Event event = service.fromDTO(eventDTO);
+  event.setId(id);
+  event = service.update(event);
+  return ResponseEntity.ok(event); 
 }
 }
 

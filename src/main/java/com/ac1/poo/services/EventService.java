@@ -43,4 +43,9 @@ public class EventService {
         Optional<Event> op = repo. getEventById(id);
         return op.orElseThrow( () ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "Evento não está cadastrado!"));
     }
+    public Event update(Event event)
+    {
+        getEventById(event.getId());
+        return repo.update(event);
+    }
 }
