@@ -1,17 +1,14 @@
 package com.ac1.poo.repositories;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import javax.annotation.PostConstruct;
 
 import com.ac1.poo.entities.Event;
 
-import org.springframework.stereotype.Component;
-@Component
-public class EventRepository {
-        private List<Event> events;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface EventRepository extends JpaRepository <Event,Long>{
+    /*    private List<Event> events;
         private long nextId;
 
     @PostConstruct
@@ -71,5 +68,5 @@ public class EventRepository {
     public void delete(Event event)
     {
             events.remove(event);
-    }
+    }*/
 }

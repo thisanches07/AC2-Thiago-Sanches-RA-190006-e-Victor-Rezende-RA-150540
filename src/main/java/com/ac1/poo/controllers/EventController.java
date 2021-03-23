@@ -1,11 +1,11 @@
 package com.ac1.poo.controllers;
 
+import java.net.URI;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 
 import com.ac1.poo.dto.EventDTO;
-import com.ac1.poo.entities.Event;
+import com.ac1.poo.dto.EventInsertDTO;
 import com.ac1.poo.services.EventService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +19,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponents;
-import org.springframework.web.util.UriComponentsBuilder;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 
 @RestController
@@ -30,42 +29,41 @@ public class EventController {
     @Autowired
     private EventService service;
     
-    @GetMapping()
-    public List<Event> getEvents(){
-    
-      return service.getEvents();
+    @GetMapping
+    public ResponseEntity<List<EventDTO>> getEvents(){
+      List<EventDTO> list = service.getEvents();
+      return ResponseEntity.ok(list);
         
     }
 
     
  @PostMapping()
- public ResponseEntity<Event> salvar(@Validated @RequestBody EventDTO eventDTO,
-                                        HttpServletRequest request,
-                                        UriComponentsBuilder builder
-                                        ) {
-     Event event = service.fromDTO(eventDTO);
-     Event newEvent = service.save(event);
-     UriComponents uriComponents = builder.path(request.getRequestURI()+ "/" +newEvent.getId()).build();                                       
-      return ResponseEntity.created(uriComponents.toUri()).build();                             
+ public ResponseEntity<EventDTO> salvar(@Validated @RequestBody EventInsertDTO eventDTO) {
+     EventDTO event = service.insert(eventDTO);
+     URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(event.getId()).toUri();
+     //UriComponents uriComponents = builder.path(request.getRequestURI()+ "/" +newEvent.getId()).build();                                       
+      return ResponseEntity.created(uri).body(event);                             
                                         }
 @GetMapping("/{id}")
-public ResponseEntity<Event> getEventById(@PathVariable long id){
-  Event event = service.getEventById(id);
+public ResponseEntity<EventDTO> getEventById(@PathVariable long id){
+  EventDTO event = service.getEventById(id);
   return ResponseEntity.ok(event);
 }
 @PutMapping("/{id}")
-public ResponseEntity<Event> update(@RequestBody EventDTO eventDTO,
+public ResponseEntity<EventDTO> update(@RequestBody EventDTO eventUpdateDTO,
                                     @PathVariable long id)
 {
-  Event event = service.fromDTO(eventDTO);
-  event.setId(id);
-  event = service.update(event);
-  return ResponseEntity.ok(event); 
+  //Event event = service.fromDTO(eventDTO);
+  //event.setId(id);
+  //event = service.update(event);
+  //return ResponseEntity.ok(event); 
+  EventDTO event = service.update(eventUpdateDTO, id);
+  return ResponseEntity.ok().body(event);
 }
 @DeleteMapping("/{id}")
 public ResponseEntity<Void> remover(@PathVariable long id)
 {
-    service.removerById(id);
+    service.delete(id);
     return ResponseEntity.noContent().build();
 }
 }

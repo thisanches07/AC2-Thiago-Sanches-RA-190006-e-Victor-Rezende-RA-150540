@@ -3,11 +3,9 @@ package com.ac1.poo.dto;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import com.ac1.poo.entities.Event;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-public class EventDTO {
-    private Long id;
+public class EventInsertDTO {
     private String name;
     private String description;
     private String place;
@@ -18,36 +16,6 @@ public class EventDTO {
     private LocalTime start_time;
     private LocalTime end_time;
     private String email_contact;
-    public EventDTO() {
-    }
-    public EventDTO(Long id, String name, String description, String place, LocalDate start_date, LocalDate end_date, LocalTime start_time, LocalTime end_time, String email_contact) {
-        setId(id);
-        setName(name);
-        setDescription(description);
-        setPlace(place);
-        setStart_date(start_date);
-        setEnd_date(end_date);
-        setStart_time(start_time);
-        setEnd_time(end_time);
-        setEmail_contact(email_contact);
-    }
-    public EventDTO(Event event){
-        this.id = event.getId();
-        this.name = event.getName();
-        this.place = event.getPlace();
-        this.description = event.getDescription();
-        this.start_date = event.getStart_date();
-        this.end_date = event.getEnd_date();
-        this.start_time = event.getStart_time();
-        this.end_time = event.getEnd_time();
-        this.email_contact = event.getEmail_contact();
-    }
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
     public String getName() {
         return name;
     }
