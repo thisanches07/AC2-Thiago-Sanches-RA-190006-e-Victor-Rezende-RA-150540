@@ -13,6 +13,8 @@ import com.ac1.poo.repositories.EventRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -23,30 +25,15 @@ public class EventService {
     @Autowired
     private EventRepository repo;
 
-    /*public Event fromDTO(EventDTO objDTO){
-        Event event = new Event();
-        event.setName(objDTO.getName());
-        event.setDescription(objDTO.getDescription());
-        event.setPlace(objDTO.getPlace());
-        event.setStart_date(objDTO.getStart_date());
-        event.setEnd_date(objDTO.getEnd_date());
-        event.setStart_time(objDTO.getStart_time());
-        event.setEnd_time(objDTO.getEnd_time());
-        event.setEmail_contact(objDTO.getEmail_contact());
-        return event;
-    }*/
-    public List<EventDTO> getEvents() {
-        List<Event> list = repo.findAll();
-        return toDTOList(list);
+ 
+    public Page<EventDTO> getEvents(PageRequest pageRequest,String name) {
+        Page<Event> list = repo.find(pageRequest,name);
+        return list.map(e -> new EventDTO(e) );
     }
     public Event save(Event event)
     {
         return repo.save(event);
     }
-    /*public List<Event> getEvents(){
-       
-        return repo.findAll();
-    }*/
 
 
     public EventDTO getEventById(long id) {
@@ -61,14 +48,11 @@ public class EventService {
     }
     public EventDTO update(EventDTO eventUpdateDTO,long id)
     {
-        //getEventById(event.getId());
-        // return repo.update(event);
+ 
         try
         {
 
             Event event = repo.getOne(id);
-           // if(event!=null)
-           // {
                 if(event.getDescription()!=null)
                 event.setDescription(eventUpdateDTO.getDescription());
                 if(event.getStart_date()!=null)    
@@ -82,7 +66,7 @@ public class EventService {
                 if(event.getPlace()!=null)
                 event.setPlace(eventUpdateDTO.getPlace());
                 event = repo.save(event);
-           // }
+           
             return new EventDTO(event);
         }
         catch(EntityNotFoundException ex){
