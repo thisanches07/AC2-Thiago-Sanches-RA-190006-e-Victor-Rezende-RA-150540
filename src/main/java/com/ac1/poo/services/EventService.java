@@ -26,8 +26,8 @@ public class EventService {
     private EventRepository repo;
 
  
-    public Page<EventDTO> getEvents(PageRequest pageRequest,String name,String place) {
-        Page<Event> list = repo.find(pageRequest,name,place);
+    public Page<EventDTO> getEvents(PageRequest pageRequest,String name,String place, String description) {
+        Page<Event> list = repo.find(pageRequest,name,place,description);
         return list.map(e -> new EventDTO(e) );
     }
     public Event save(Event event)

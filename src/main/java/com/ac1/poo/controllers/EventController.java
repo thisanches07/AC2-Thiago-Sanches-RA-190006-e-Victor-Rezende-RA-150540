@@ -2,7 +2,6 @@ package com.ac1.poo.controllers;
 
 import java.net.URI;
 
-
 import com.ac1.poo.dto.EventDTO;
 import com.ac1.poo.dto.EventInsertDTO;
 import com.ac1.poo.services.EventService;
@@ -39,11 +38,12 @@ public class EventController {
       @RequestParam(value = "direction",    defaultValue = "ASC") String direction,   //direcao
       @RequestParam(value = "orderBy",      defaultValue = "id") String orderBy,      //ordenacao
       @RequestParam(value = "name",      defaultValue = "") String name,
-      @RequestParam(value = "place",      defaultValue = "") String place
+      @RequestParam(value = "place",      defaultValue = "") String place,
+      @RequestParam(value = "description",      defaultValue = "") String description
       ){
 
       PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction),orderBy);
-      Page<EventDTO> list = service.getEvents(pageRequest,name,place);
+      Page<EventDTO> list = service.getEvents(pageRequest,name,place,description);
       return ResponseEntity.ok(list);
         
     }
