@@ -1,4 +1,4 @@
-INSERT INTO tb_event (name,description,place,start_date,end_date,start_time,end_time,email_contact) VALUES ('Abril Fest','descricao do Abril Fest','Araçoiaba da Serra','2021-10-10','2021-11-11','00:00','22:22','email');
+INSERT INTO tb_event (name,description,place,start_date,end_date,start_time,end_time,email_contact) VALUES ('Abril Fest','descricao do Abril Fest','Araçoiaba da Serra','2021-04-10','2021-11-11','00:00','22:22','email');
 INSERT INTO tb_event (name,description,place,start_date,end_date,start_time,end_time,email_contact) VALUES ('October Fest','descricao do October Fest','Florianopolis','2021-10-11','2021-10-15','00:00','22:22','email');
 INSERT INTO tb_event (name,description,place,start_date,end_date,start_time,end_time,email_contact) VALUES ('Festa da Facens','descricao do Abril Fest','Araçoiaba da Serra','2021-01-11','2021-01-12','00:00','22:22','email');
 INSERT INTO tb_event (name,description,place,start_date,end_date,start_time,end_time,email_contact) VALUES ('Festa de Formatura','descricao do October Fest','Florianopolis','2021-12-12','2021-10-13','00:00','22:22','email');

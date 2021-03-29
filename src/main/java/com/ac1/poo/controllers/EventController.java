@@ -1,6 +1,7 @@
 package com.ac1.poo.controllers;
 
 import java.net.URI;
+import java.time.LocalDate;
 
 import com.ac1.poo.dto.EventDTO;
 import com.ac1.poo.dto.EventInsertDTO;
@@ -37,13 +38,14 @@ public class EventController {
       @RequestParam(value = "linesPerPage", defaultValue = "6") Integer linesPerPage, //linhas por pagina
       @RequestParam(value = "direction",    defaultValue = "ASC") String direction,   //direcao
       @RequestParam(value = "orderBy",      defaultValue = "id") String orderBy,      //ordenacao
-      @RequestParam(value = "name",      defaultValue = "") String name,
-      @RequestParam(value = "place",      defaultValue = "") String place,
-      @RequestParam(value = "description",      defaultValue = "") String description
+      @RequestParam(value = "name",      defaultValue = "") String name,              //nome
+      @RequestParam(value = "place",      defaultValue = "") String place,            //lugar
+      @RequestParam(value = "description",      defaultValue = "") String description,//descrição
+      @RequestParam(value = "start_date",      defaultValue = "") String start_date   //data de inicio
       ){
-
+        LocalDate date = LocalDate.parse(start_date); 
       PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction),orderBy);
-      Page<EventDTO> list = service.getEvents(pageRequest,name,place,description);
+      Page<EventDTO> list = service.getEvents(pageRequest,name,place,description,date);
       return ResponseEntity.ok(list);
         
     }
@@ -52,8 +54,7 @@ public class EventController {
  @PostMapping()
  public ResponseEntity<EventDTO> salvar(@Validated @RequestBody EventInsertDTO eventDTO) {
      EventDTO event = service.insert(eventDTO);
-     URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(event.getId()).toUri();
-     //UriComponents uriComponents = builder.path(request.getRequestURI()+ "/" +newEvent.getId()).build();                                       
+     URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(event.getId()).toUri();                                      
       return ResponseEntity.created(uri).body(event);                             
                                         }
 @GetMapping("/{id}")
@@ -65,10 +66,6 @@ public ResponseEntity<EventDTO> getEventById(@PathVariable long id){
 public ResponseEntity<EventDTO> update(@RequestBody EventDTO eventUpdateDTO,
                                     @PathVariable long id)
 {
-  //Event event = service.fromDTO(eventDTO);
-  //event.setId(id);
-  //event = service.update(event);
-  //return ResponseEntity.ok(event); 
   EventDTO event = service.update(eventUpdateDTO, id);
   return ResponseEntity.ok().body(event);
 }

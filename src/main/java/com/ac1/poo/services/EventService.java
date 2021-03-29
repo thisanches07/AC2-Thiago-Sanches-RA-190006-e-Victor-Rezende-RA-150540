@@ -1,5 +1,6 @@
 package com.ac1.poo.services;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,9 +26,10 @@ public class EventService {
     @Autowired
     private EventRepository repo;
 
- 
-    public Page<EventDTO> getEvents(PageRequest pageRequest,String name,String place, String description) {
-        Page<Event> list = repo.find(pageRequest,name,place,description);
+    
+    public Page<EventDTO> getEvents(PageRequest pageRequest,String name,String place, String description, LocalDate start_date) {
+        
+        Page<Event> list = repo.find(pageRequest,name,place,description,start_date);
         return list.map(e -> new EventDTO(e) );
     }
     public Event save(Event event)
