@@ -1,7 +1,6 @@
 package com.ac1.poo.controllers;
 
 import java.net.URI;
-import java.time.LocalDate;
 
 import com.ac1.poo.dto.EventDTO;
 import com.ac1.poo.dto.EventInsertDTO;
