@@ -1,6 +1,7 @@
 package com.ac1.poo.services;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -27,10 +28,17 @@ public class EventService {
     private EventRepository repo;
 
     
-    public Page<EventDTO> getEvents(PageRequest pageRequest,String name,String place, String description, LocalDate start_date) {
-        
-        Page<Event> list = repo.find(pageRequest,name,place,description,start_date);
-        return list.map(e -> new EventDTO(e) );
+    public Page<EventDTO> getEvents(PageRequest pageRequest,String name,String place, String description, String start_date) {
+        if(start_date.isEmpty())
+        {
+            Page<Event> list = repo.find(pageRequest,name,place,description);
+            return list.map(e -> new EventDTO(e) );
+        }else{
+            DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate date = LocalDate.parse(start_date,formato);
+            Page<Event> list = repo.find(pageRequest,name,place,description,date);
+            return list.map(e -> new EventDTO(e) );
+        }
     }
     public Event save(Event event)
     {

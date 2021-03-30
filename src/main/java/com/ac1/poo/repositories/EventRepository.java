@@ -19,6 +19,14 @@ public interface EventRepository extends JpaRepository <Event,Long>{
             "WHERE" +
              "(e.name LIKE CONCAT('%', :name,'%')) AND " +
              "(e.place LIKE CONCAT('%', :place,'%')) AND "+
+             "(e.description LIKE CONCAT('%', :description,'%')) "
+    )
+    public Page<Event> find(Pageable pagerequest,String name,String place, String description);
+
+    @Query("SELECT e FROM Event e " +
+            "WHERE" +
+             "(e.name LIKE CONCAT('%', :name,'%')) AND " +
+             "(e.place LIKE CONCAT('%', :place,'%')) AND "+
              "(e.description LIKE CONCAT('%', :description,'%')) AND " +
              "(e.start_date > :start_date)"
     )

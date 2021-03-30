@@ -43,9 +43,9 @@ public class EventController {
       @RequestParam(value = "description",      defaultValue = "") String description,//descrição
       @RequestParam(value = "start_date",      defaultValue = "") String start_date   //data de inicio
       ){
-        LocalDate date = LocalDate.parse(start_date); 
+     
       PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction),orderBy);
-      Page<EventDTO> list = service.getEvents(pageRequest,name,place,description,date);
+      Page<EventDTO> list = service.getEvents(pageRequest,name,place,description,start_date);
       return ResponseEntity.ok(list);
         
     }
