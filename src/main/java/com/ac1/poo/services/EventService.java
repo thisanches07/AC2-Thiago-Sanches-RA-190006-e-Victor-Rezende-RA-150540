@@ -42,7 +42,8 @@ public class EventService {
     }
     public Event save(Event event)
     {
-        return repo.save(event);
+            return repo.save(event);
+            
     }
 
 
@@ -53,8 +54,14 @@ public class EventService {
     }
     public EventDTO insert(EventInsertDTO event){
         Event entity = new Event(event);
-        entity = repo.save(entity);
-        return new EventDTO(entity);
+        if(event.getEnd_date().isBefore(event.getStart_date()))
+        {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Data de fim menor que a data de inicio!");
+        }
+        else{
+            entity = repo.save(entity);
+            return new EventDTO(entity);
+        }
     }
     public EventDTO update(EventDTO eventUpdateDTO,long id)
     {
