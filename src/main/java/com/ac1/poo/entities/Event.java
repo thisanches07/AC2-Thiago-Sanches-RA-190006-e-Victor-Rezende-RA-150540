@@ -3,15 +3,22 @@ package com.ac1.poo.entities;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.ac1.poo.dto.EventInsertDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name="TB_EVENT")
 public class Event implements Serializable{
@@ -29,7 +36,18 @@ public class Event implements Serializable{
     private LocalTime start_time;
     private LocalTime end_time;
     private String email_contact;
+    private Long amountFreeTickets;
+    private Long amountPayedTickets;
+    private Double priceTicket;
 
+    @OneToMany( cascade = CascadeType.PERSIST)
+    @JoinColumn(name="EVENT_ID")
+    private List<Ticket> tickets = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "events")
+    private List<Place> places = new ArrayList<>();
+
+    
     public Event(){
 
     }
@@ -42,6 +60,9 @@ public class Event implements Serializable{
         this.start_time = event.getStart_time();
         this.end_time = event.getEnd_time();
         this.email_contact = event.getEmail_contact();
+        //this.amountFreeTickets = event.getAmountFreeTickets();
+        //this.amountPayedTickets = event.getAmountPayedTickets();
+        //this.priceTicket = event.getPriceTicket();
     }
     public Long getId() {
         return id;
@@ -113,6 +134,25 @@ public class Event implements Serializable{
 
     public void setEmail_contact(String email_contact) {
         this.email_contact = email_contact;
+    }
+
+    public Long getAmountFreeTickets() {
+        return amountFreeTickets;
+    }
+    public void setAmountFreeTickets(Long amountFreeTickets) {
+        this.amountFreeTickets = amountFreeTickets;
+    }
+    public Long getAmountPayedTickets() {
+        return amountPayedTickets;
+    }
+    public void setAmountPayedTickets(Long amountPayedTickets) {
+        this.amountPayedTickets = amountPayedTickets;
+    }
+    public Double getPriceTicket() {
+        return priceTicket;
+    }
+    public void setPriceTicket(Double priceTicket) {
+        this.priceTicket = priceTicket;
     }
 
     @Override
