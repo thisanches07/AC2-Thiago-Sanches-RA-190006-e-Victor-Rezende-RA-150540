@@ -22,7 +22,7 @@ public class Place implements Serializable{
     private String address;
 
     @ManyToMany
-    private List<Place> places = new ArrayList<>();
+    private List<Event> events = new ArrayList<>();
 
     public Long getId() {
         return id;

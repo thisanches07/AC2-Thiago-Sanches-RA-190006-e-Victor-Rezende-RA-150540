@@ -47,6 +47,8 @@ public class Event implements Serializable{
     @ManyToMany(mappedBy = "events")
     private List<Place> places = new ArrayList<>();
 
+    @ManyToMany
+    private List<Admin> Admin = new ArrayList<>();
     
     public Event(){
 
