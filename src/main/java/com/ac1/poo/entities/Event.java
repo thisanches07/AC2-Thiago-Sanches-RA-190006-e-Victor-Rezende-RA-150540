@@ -47,6 +47,13 @@ public class Event implements Serializable{
     @ManyToMany(mappedBy = "events")
     private List<Place> places = new ArrayList<>();
 
+    public List<Place> getPlaces() {
+        return places;
+    }
+    public void addPlace(Place place) {
+        this.places.add(place);
+    }
+
     @ManyToMany
     private List<Admin> Admin = new ArrayList<>();
     
@@ -62,9 +69,9 @@ public class Event implements Serializable{
         this.start_time = event.getStart_time();
         this.end_time = event.getEnd_time();
         this.email_contact = event.getEmail_contact();
-        //this.amountFreeTickets = event.getAmountFreeTickets();
-        //this.amountPayedTickets = event.getAmountPayedTickets();
-        //this.priceTicket = event.getPriceTicket();
+        this.amountFreeTickets = event.getAmountFreeTickets();
+        this.amountPayedTickets = event.getAmountPayedTickets();
+        this.priceTicket = event.getPriceTicket();
     }
     public Long getId() {
         return id;

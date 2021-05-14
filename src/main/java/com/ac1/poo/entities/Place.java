@@ -27,6 +27,12 @@ public class Place implements Serializable{
     public Long getId() {
         return id;
     }
+    public List<Event> getEvents() {
+        return events;
+    }
+    public void addEvent(Event event) {
+        this.events.add(event);
+    }
     public void setId(Long id) {
         this.id = id;
     }

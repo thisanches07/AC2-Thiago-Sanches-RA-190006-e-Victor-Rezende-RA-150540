@@ -16,8 +16,29 @@ public class EventInsertDTO {
     private LocalTime start_time;
     private LocalTime end_time;
     private String email_contact;
+    private Long amountFreeTickets;
+    private Long amountPayedTickets;
+    private Double priceTicket;
     public String getName() {
         return name;
+    }
+    public Long getAmountFreeTickets() {
+        return amountFreeTickets;
+    }
+    public void setAmountFreeTickets(Long amountFreeTickets) {
+        this.amountFreeTickets = amountFreeTickets;
+    }
+    public Long getAmountPayedTickets() {
+        return amountPayedTickets;
+    }
+    public void setAmountPayedTickets(Long amountPayedTickets) {
+        this.amountPayedTickets = amountPayedTickets;
+    }
+    public Double getPriceTicket() {
+        return priceTicket;
+    }
+    public void setPriceTicket(Double priceTicket) {
+        this.priceTicket = priceTicket;
     }
     public void setName(String name) {
         this.name = name;

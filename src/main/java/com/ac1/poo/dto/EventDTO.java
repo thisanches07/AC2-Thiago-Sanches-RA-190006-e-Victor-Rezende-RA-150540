@@ -18,9 +18,30 @@ public class EventDTO {
     private LocalTime start_time;
     private LocalTime end_time;
     private String email_contact;
+    private Long amountFreeTickets;
+    private Long amountPayedTickets;
+    private Double priceTicket;
     public EventDTO() {
     }
-    public EventDTO(Long id, String name, String description, String place, LocalDate start_date, LocalDate end_date, LocalTime start_time, LocalTime end_time, String email_contact) {
+    public Long getAmountFreeTickets() {
+        return amountFreeTickets;
+    }
+    public void setAmountFreeTickets(Long amountFreeTickets) {
+        this.amountFreeTickets = amountFreeTickets;
+    }
+    public Long getAmountPayedTickets() {
+        return amountPayedTickets;
+    }
+    public void setAmountPayedTickets(Long amountPayedTickets) {
+        this.amountPayedTickets = amountPayedTickets;
+    }
+    public Double getPriceTicket() {
+        return priceTicket;
+    }
+    public void setPriceTicket(Double priceTicket) {
+        this.priceTicket = priceTicket;
+    }
+    public EventDTO(Long id, String name, String description, String place, LocalDate start_date, LocalDate end_date, LocalTime start_time, LocalTime end_time, String email_contact,long amountFreeTickets, long amountPayedTickets,Double priceTicket) {
         setId(id);
         setName(name);
         setDescription(description);
@@ -30,6 +51,9 @@ public class EventDTO {
         setStart_time(start_time);
         setEnd_time(end_time);
         setEmail_contact(email_contact);
+        setAmountFreeTickets(amountFreeTickets);
+        setAmountPayedTickets(amountPayedTickets);
+        setPriceTicket(priceTicket);
     }
     public EventDTO(Event event){
         this.id = event.getId();
@@ -41,6 +65,10 @@ public class EventDTO {
         this.start_time = event.getStart_time();
         this.end_time = event.getEnd_time();
         this.email_contact = event.getEmail_contact();
+        this.amountFreeTickets = event.getAmountFreeTickets();
+        this.amountPayedTickets = event.getAmountPayedTickets();
+        this.priceTicket = event.getPriceTicket();
+        
     }
     public Long getId() {
         return id;

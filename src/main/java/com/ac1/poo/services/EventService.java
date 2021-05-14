@@ -104,7 +104,7 @@ public class EventService {
         List<EventDTO> listDTO = new ArrayList<>();
 
         for (Event e : list) {
-            EventDTO event = new EventDTO(e.getId(), e.getName(),e.getDescription(),e.getPlace(),e.getStart_date(),e.getEnd_date(),e.getStart_time(),e.getEnd_time(),e.getEmail_contact());
+            EventDTO event = new EventDTO(e.getId(), e.getName(),e.getDescription(),e.getPlace(),e.getStart_date(),e.getEnd_date(),e.getStart_time(),e.getEnd_time(),e.getEmail_contact(),e.getAmountFreeTickets(),e.getAmountPayedTickets(),e.getPriceTicket());
             listDTO.add(event);
         }
         
