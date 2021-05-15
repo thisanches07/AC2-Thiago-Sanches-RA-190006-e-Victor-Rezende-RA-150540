@@ -65,5 +65,4 @@ public class BaseUser implements Serializable {
         return true;
     }
     
-    
 }
