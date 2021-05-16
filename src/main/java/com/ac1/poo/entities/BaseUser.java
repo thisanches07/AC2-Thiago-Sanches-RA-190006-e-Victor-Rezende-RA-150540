@@ -20,7 +20,16 @@ public class BaseUser implements Serializable {
     private Long id;
     private String name;
     private String email;
+
+    public BaseUser(){
+
+    }
     
+    public BaseUser(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
+
     public Long getId() {
         return id;
     }

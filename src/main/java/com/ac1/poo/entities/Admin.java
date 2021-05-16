@@ -17,6 +17,17 @@ public class Admin extends BaseUser {
 
     private String phoneNumber;
 
+    @OneToMany(mappedBy = "Admin")
+    private List<Event> events = new ArrayList<>();
+
+    
+
+    
+    public Admin(AdminInsertDTO admin){
+        super(admin.getName(),admin.getEmail());
+        this.phoneNumber = admin.getPhoneNumber();
+    }
+    
     public List<Event> getEvents() {
         return events;
     }
@@ -25,10 +36,6 @@ public class Admin extends BaseUser {
         this.events = events;
     }
 
-
-    @OneToMany(mappedBy = "Admin")
-    private List<Event> events = new ArrayList<>();
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -36,12 +43,4 @@ public class Admin extends BaseUser {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-
-    
-    public Admin(AdminInsertDTO admin){
-        this.name = admin.getName();
-        this.email = admin.getEmail();
-        this.phoneNumber = admin.getPhoneNumber();
-    }
-    
 }

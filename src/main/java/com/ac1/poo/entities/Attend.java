@@ -32,8 +32,7 @@ public class Attend extends BaseUser {
     }
 
     public Attend(AttendInsertDTO attend){
-        this.name = attend.getName();
-        this.email = attend.getEmail();
+        super(attend.getName(),attend.getEmail());
         this.balance = attend.getBalance();
     }
     

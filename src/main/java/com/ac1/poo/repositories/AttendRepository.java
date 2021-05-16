@@ -15,7 +15,7 @@ public interface AttendRepository extends JpaRepository <Attend,Long>{
             "WHERE" +
              "(a.name LIKE CONCAT('%', :name,'%')) AND " +
              "(a.email LIKE CONCAT('%', :email,'%')) AND "+
-             "(a.phoneNumber= :balance) "
+             "(a.phoneNumber = :balance) "
     )
     public Page<Attend> find(Pageable pagerequest,String name,String email, Double balance);
 }

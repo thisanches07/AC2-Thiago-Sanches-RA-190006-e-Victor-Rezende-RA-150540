@@ -24,7 +24,7 @@ public class AttendService {
     @Autowired
     private AttendRepository repo;
 
-    public Page<AttendDTO> getAttends(PageRequest pageRequest,String name,String email, Double balance) {
+    public Page<AttendDTO> getAttendees(PageRequest pageRequest,String name,String email, Double balance) {
         
             Page<Attend> list = repo.find(pageRequest,name,email,balance);
             return list.map(e -> new AttendDTO(e) );
@@ -33,7 +33,7 @@ public class AttendService {
     {
             return repo.save(attend);       
     }
-    public AttendDTO getAttendById(long id) {
+    public AttendDTO getAttendeeById(long id) {
         Optional<Attend> op = repo.findById(id);
         Attend attend = op.orElseThrow( () ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "Attend não está cadastrado!"));
         return new AttendDTO(attend);

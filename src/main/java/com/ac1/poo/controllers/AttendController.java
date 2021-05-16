@@ -2,9 +2,9 @@ package com.ac1.poo.controllers;
 
 import java.net.URI;
 
-import com.ac1.poo.dto.EventDTO;
-import com.ac1.poo.dto.EventInsertDTO;
-import com.ac1.poo.services.EventService;
+import com.ac1.poo.dto.AttendDTO;
+import com.ac1.poo.dto.AttendInsertDTO;
+import com.ac1.poo.services.AttendService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,49 +23,44 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-
 @RestController
-@RequestMapping("/events")
-public class EventController {
-
+@RequestMapping("/attendees")
+public class AttendController {
     @Autowired
-    private EventService service;
+    private AttendService service;
     
     @GetMapping
-    public ResponseEntity<Page<EventDTO>> getEvents(
+    public ResponseEntity<Page<AttendDTO>> getAttend(
       @RequestParam(value = "page",         defaultValue = "0")Integer page,          //pagina corrente
       @RequestParam(value = "linesPerPage", defaultValue = "6") Integer linesPerPage, //linhas por pagina
       @RequestParam(value = "direction",    defaultValue = "ASC") String direction,   //direcao
       @RequestParam(value = "orderBy",      defaultValue = "id") String orderBy,      //ordenacao
       @RequestParam(value = "name",      defaultValue = "") String name,              //nome
-      @RequestParam(value = "place",      defaultValue = "") String place,            //lugar
-      @RequestParam(value = "description",      defaultValue = "") String description,//descrição
-      @RequestParam(value = "start_date",      defaultValue = "") String start_date   //data de inicio
+      @RequestParam(value = "email",      defaultValue = "") String email,            //email
+      @RequestParam(value = "balance",      defaultValue = "") Double balance//Numero
       ){
      
       PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction),orderBy);
-      Page<EventDTO> list = service.getEvents(pageRequest,name,place,description,start_date);
+      Page<AttendDTO> list = service.getAttendees(pageRequest,name,email,balance);
       return ResponseEntity.ok(list);
         
     }
-
-    
- @PostMapping()
- public ResponseEntity<EventDTO> salvar(@Validated @RequestBody EventInsertDTO eventDTO, @RequestBody Long adminID) {
-     EventDTO event = service.insert(eventDTO);
-     URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(event.getId()).toUri();                                      
-      return ResponseEntity.created(uri).body(event);                             
+    @PostMapping()
+ public ResponseEntity<AttendDTO> salvar(@Validated @RequestBody AttendInsertDTO adminDTO) {
+    AttendDTO admin = service.insert(adminDTO);
+     URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(admin.getId()).toUri();                                      
+      return ResponseEntity.created(uri).body(admin);                             
                                         }
 @GetMapping("/{id}")
-public ResponseEntity<EventDTO> getEventById(@PathVariable long id){
-  EventDTO event = service.getEventById(id);
+public ResponseEntity<AttendDTO> getEventById(@PathVariable long id){
+    AttendDTO event = service.getAttendeeById(id);
   return ResponseEntity.ok(event);
 }
 @PutMapping("/{id}")
-public ResponseEntity<EventDTO> update(@RequestBody EventDTO eventUpdateDTO,
+public ResponseEntity<AttendDTO> update(@RequestBody AttendDTO adminUpdateDTO,
                                     @PathVariable long id)
 {
-  EventDTO event = service.update(eventUpdateDTO, id);
+    AttendDTO event = service.update(adminUpdateDTO, id);
   return ResponseEntity.ok().body(event);
 }
 @DeleteMapping("/{id}")
@@ -75,6 +70,3 @@ public ResponseEntity<Void> remover(@PathVariable long id)
     return ResponseEntity.noContent().build();
 }
 }
-
-
-
