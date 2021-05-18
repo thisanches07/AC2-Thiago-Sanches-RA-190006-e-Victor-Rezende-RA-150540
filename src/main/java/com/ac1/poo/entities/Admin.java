@@ -22,7 +22,9 @@ public class Admin extends BaseUser {
 
     
 
-    
+    public Admin(){
+
+    }
     public Admin(AdminInsertDTO admin){
         super(admin.getName(),admin.getEmail());
         this.phoneNumber = admin.getPhoneNumber();
