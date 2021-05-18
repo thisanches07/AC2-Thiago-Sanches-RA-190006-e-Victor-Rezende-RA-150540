@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.ac1.poo.dto.TicketInsertDTO;
+
 @Entity
 @Table(name="TB_TICKET")
 public class Ticket implements Serializable{
@@ -16,11 +18,18 @@ public class Ticket implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String type;
+    private TicketType type;
     private LocalDate date;
     private Double price;
     
-    
+    public Ticket(){
+
+    }
+    public Ticket(TicketInsertDTO place){
+        this.type = place.getType();
+        this.date = place.getDate();
+        this.price = place.getPrice();
+    }
 
     public Long getId() {
         return id;
@@ -28,10 +37,10 @@ public class Ticket implements Serializable{
     public void setId(Long id) {
         this.id = id;
     }
-    public String getType() {
+    public TicketType getType() {
         return type;
     }
-    public void setType(String type) {
+    public void setType(TicketType type) {
         this.type = type;
     }
     public LocalDate getDate() {
