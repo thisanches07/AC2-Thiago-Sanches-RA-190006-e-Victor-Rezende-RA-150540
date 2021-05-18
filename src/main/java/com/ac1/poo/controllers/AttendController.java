@@ -37,7 +37,7 @@ public class AttendController {
       @RequestParam(value = "orderBy",      defaultValue = "id") String orderBy,      //ordenacao
       @RequestParam(value = "name",      defaultValue = "") String name,              //nome
       @RequestParam(value = "email",      defaultValue = "") String email,            //email
-      @RequestParam(value = "balance",      defaultValue = "") Double balance//Numero
+      @RequestParam(value = "balance",      defaultValue = "") Double balance         //balanço
       ){
      
       PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction),orderBy);
@@ -46,22 +46,22 @@ public class AttendController {
         
     }
     @PostMapping()
- public ResponseEntity<AttendDTO> salvar(@Validated @RequestBody AttendInsertDTO adminDTO) {
-    AttendDTO admin = service.insert(adminDTO);
-     URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(admin.getId()).toUri();                                      
-      return ResponseEntity.created(uri).body(admin);                             
+ public ResponseEntity<AttendDTO> salvar(@Validated @RequestBody AttendInsertDTO attendDTO) {
+    AttendDTO attend = service.insert(attendDTO);
+     URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(attend.getId()).toUri();                                      
+      return ResponseEntity.created(uri).body(attend);                             
                                         }
 @GetMapping("/{id}")
-public ResponseEntity<AttendDTO> getEventById(@PathVariable long id){
-    AttendDTO event = service.getAttendeeById(id);
-  return ResponseEntity.ok(event);
+public ResponseEntity<AttendDTO> getAttendById(@PathVariable long id){
+    AttendDTO attend = service.getAttendeeById(id);
+  return ResponseEntity.ok(attend);
 }
 @PutMapping("/{id}")
-public ResponseEntity<AttendDTO> update(@RequestBody AttendDTO adminUpdateDTO,
+public ResponseEntity<AttendDTO> update(@RequestBody AttendDTO attendUpdateDTO,
                                     @PathVariable long id)
 {
-    AttendDTO event = service.update(adminUpdateDTO, id);
-  return ResponseEntity.ok().body(event);
+    AttendDTO attend = service.update(attendUpdateDTO, id);
+  return ResponseEntity.ok().body(attend);
 }
 @DeleteMapping("/{id}")
 public ResponseEntity<Void> remover(@PathVariable long id)

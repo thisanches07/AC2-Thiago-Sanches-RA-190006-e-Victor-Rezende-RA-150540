@@ -23,24 +23,7 @@ public class EventDTO {
     private Double priceTicket;
     public EventDTO() {
     }
-    public Long getAmountFreeTickets() {
-        return amountFreeTickets;
-    }
-    public void setAmountFreeTickets(Long amountFreeTickets) {
-        this.amountFreeTickets = amountFreeTickets;
-    }
-    public Long getAmountPayedTickets() {
-        return amountPayedTickets;
-    }
-    public void setAmountPayedTickets(Long amountPayedTickets) {
-        this.amountPayedTickets = amountPayedTickets;
-    }
-    public Double getPriceTicket() {
-        return priceTicket;
-    }
-    public void setPriceTicket(Double priceTicket) {
-        this.priceTicket = priceTicket;
-    }
+
     public EventDTO(Long id, String name, String description, String place, LocalDate start_date, LocalDate end_date, LocalTime start_time, LocalTime end_time, String email_contact,long amountFreeTickets, long amountPayedTickets,Double priceTicket) {
         setId(id);
         setName(name);
@@ -70,6 +53,26 @@ public class EventDTO {
         this.priceTicket = event.getPriceTicket();
         
     }
+    
+    public Long getAmountFreeTickets() {
+        return amountFreeTickets;
+    }
+    public void setAmountFreeTickets(Long amountFreeTickets) {
+        this.amountFreeTickets = amountFreeTickets;
+    }
+    public Long getAmountPayedTickets() {
+        return amountPayedTickets;
+    }
+    public void setAmountPayedTickets(Long amountPayedTickets) {
+        this.amountPayedTickets = amountPayedTickets;
+    }
+    public Double getPriceTicket() {
+        return priceTicket;
+    }
+    public void setPriceTicket(Double priceTicket) {
+        this.priceTicket = priceTicket;
+    }
+    
     public Long getId() {
         return id;
     }

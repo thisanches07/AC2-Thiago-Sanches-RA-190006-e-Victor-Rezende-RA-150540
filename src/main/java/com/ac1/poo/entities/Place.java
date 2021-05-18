@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.ac1.poo.dto.PlaceInsertDTO;
+
 @Entity
 @Table(name="TB_PLACE")
 public class Place implements Serializable{
@@ -23,6 +25,14 @@ public class Place implements Serializable{
 
     @ManyToMany
     private List<Event> events = new ArrayList<>();
+
+    public Place(){
+
+    }
+    public Place(PlaceInsertDTO place){
+        this.name = place.getName();
+        this.address = place.getAddress();
+    }
 
     public Long getId() {
         return id;

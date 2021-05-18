@@ -19,6 +19,7 @@ public class EventInsertDTO {
     private Long amountFreeTickets;
     private Long amountPayedTickets;
     private Double priceTicket;
+    
     public String getName() {
         return name;
     }

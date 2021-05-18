@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AttendRepository extends JpaRepository <Attend,Long>{
 
-    @Query("SELECT a FROM Admin a " +
+    @Query("SELECT a FROM Attend a " +
             "WHERE" +
              "(a.name LIKE CONCAT('%', :name,'%')) AND " +
              "(a.email LIKE CONCAT('%', :email,'%')) AND "+
