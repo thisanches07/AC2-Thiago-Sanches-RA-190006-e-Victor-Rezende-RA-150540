@@ -24,9 +24,9 @@ public class AdminService {
     @Autowired
     private AdminRepository repo;
 
-    public Page<AdminDTO> getAdmins(PageRequest pageRequest,String name,String email, String phoneNumber) {
+    public Page<AdminDTO> getAdmins(PageRequest pageRequest) {
         
-            Page<Admin> list = repo.find(pageRequest,name,email,phoneNumber);
+            Page<Admin> list = repo.find(pageRequest);
             return list.map(e -> new AdminDTO(e) );
     }
     public Admin save(Admin admin)

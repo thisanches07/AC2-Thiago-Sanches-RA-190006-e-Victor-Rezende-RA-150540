@@ -34,13 +34,11 @@ public class PlaceController {
       @RequestParam(value = "page",         defaultValue = "0")Integer page,          //pagina corrente
       @RequestParam(value = "linesPerPage", defaultValue = "6") Integer linesPerPage, //linhas por pagina
       @RequestParam(value = "direction",    defaultValue = "ASC") String direction,   //direcao
-      @RequestParam(value = "orderBy",      defaultValue = "id") String orderBy,      //ordenacao
-      @RequestParam(value = "name",      defaultValue = "") String name,              //nome
-      @RequestParam(value = "address",      defaultValue = "") String address           //endereço
+      @RequestParam(value = "orderBy",      defaultValue = "id") String orderBy       //ordenacao
       ){
      
       PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction),orderBy);
-      Page<PlaceDTO> list = service.getPlaces(pageRequest,name,address);
+      Page<PlaceDTO> list = service.getPlaces(pageRequest);
       return ResponseEntity.ok(list);
         
     }

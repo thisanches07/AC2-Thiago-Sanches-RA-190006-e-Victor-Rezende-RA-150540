@@ -40,6 +40,8 @@ public class Event implements Serializable{
     private Long amountPayedTickets;
     private Double priceTicket;
 
+    
+
     @OneToMany( cascade = CascadeType.PERSIST)
     @JoinColumn(name="EVENT_ID")
     private List<Ticket> tickets = new ArrayList<>();
@@ -47,15 +49,8 @@ public class Event implements Serializable{
     @ManyToMany(mappedBy = "events")
     private List<Place> places = new ArrayList<>();
 
-    public List<Place> getPlaces() {
-        return places;
-    }
-    public void addPlace(Place place) {
-        this.places.add(place);
-    }
-
-    @ManyToMany
-    private List<Admin> Admin = new ArrayList<>();
+    @OneToMany
+    private Admin admin;
     
     public Event(){
 
@@ -162,6 +157,18 @@ public class Event implements Serializable{
     }
     public void setPriceTicket(Double priceTicket) {
         this.priceTicket = priceTicket;
+    }
+    public List<Place> getPlaces() {
+        return places;
+    }
+    public void addPlace(Place place) {
+        this.places.add(place);
+    }
+    public Admin getAdmin() {
+        return admin;
+    }
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
     }
 
     @Override

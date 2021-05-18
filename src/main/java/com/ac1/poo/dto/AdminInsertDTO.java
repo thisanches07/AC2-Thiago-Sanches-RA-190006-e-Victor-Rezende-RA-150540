@@ -4,6 +4,8 @@ public class AdminInsertDTO {
     private String name;
     private String email;
     private String phoneNumber;
+    
+    
     public String getName() {
         return name;
     }
@@ -22,6 +24,5 @@ public class AdminInsertDTO {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-
     
 }

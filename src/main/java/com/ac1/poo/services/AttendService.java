@@ -24,9 +24,9 @@ public class AttendService {
     @Autowired
     private AttendRepository repo;
 
-    public Page<AttendDTO> getAttendees(PageRequest pageRequest,String name,String email, Double balance) {
+    public Page<AttendDTO> getAttendees(PageRequest pageRequest) {
         
-            Page<Attend> list = repo.find(pageRequest,name,email,balance);
+            Page<Attend> list = repo.find(pageRequest);
             return list.map(e -> new AttendDTO(e) );
     }
     public Attend save(Attend attend)

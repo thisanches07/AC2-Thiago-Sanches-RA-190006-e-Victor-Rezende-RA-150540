@@ -51,7 +51,7 @@ public class EventController {
 
     
  @PostMapping()
- public ResponseEntity<EventDTO> salvar(@Validated @RequestBody EventInsertDTO eventDTO, @RequestBody Long adminID) {
+ public ResponseEntity<EventDTO> salvar(@Validated @RequestBody EventInsertDTO eventDTO) {
      EventDTO event = service.insert(eventDTO);
      URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(event.getId()).toUri();                                      
       return ResponseEntity.created(uri).body(event);                             

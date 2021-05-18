@@ -19,6 +19,7 @@ public class EventInsertDTO {
     private Long amountFreeTickets;
     private Long amountPayedTickets;
     private Double priceTicket;
+    private Long adminId;
     
     public String getName() {
         return name;
@@ -85,5 +86,11 @@ public class EventInsertDTO {
     }
     public void setEmail_contact(String email_contact) {
         this.email_contact = email_contact;
+    }
+    public Long getAdminId() {
+        return adminId;
+    }
+    public void setAdminId(Long adminId) {
+        this.adminId = adminId;
     }
 }

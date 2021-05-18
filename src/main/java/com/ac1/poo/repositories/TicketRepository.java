@@ -18,8 +18,8 @@ public interface TicketRepository extends JpaRepository <Ticket,Long>{
 
     @Query("SELECT t FROM Ticket t " +
             "WHERE" +
-             "(t.type LIKE :type AND " +
-             "(t.date > :date AND "+
+             "(t.type LIKE :type) AND " +
+             "(t.date > :date) AND "+
              "(t.price = :price) "
     )
     public Page<Ticket> find(Pageable pagerequest,TicketType type, LocalDate date, Double price);

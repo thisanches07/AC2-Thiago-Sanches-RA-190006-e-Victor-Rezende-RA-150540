@@ -34,14 +34,11 @@ public class AttendController {
       @RequestParam(value = "page",         defaultValue = "0")Integer page,          //pagina corrente
       @RequestParam(value = "linesPerPage", defaultValue = "6") Integer linesPerPage, //linhas por pagina
       @RequestParam(value = "direction",    defaultValue = "ASC") String direction,   //direcao
-      @RequestParam(value = "orderBy",      defaultValue = "id") String orderBy,      //ordenacao
-      @RequestParam(value = "name",      defaultValue = "") String name,              //nome
-      @RequestParam(value = "email",      defaultValue = "") String email,            //email
-      @RequestParam(value = "balance",      defaultValue = "") Double balance         //balanço
+      @RequestParam(value = "orderBy",      defaultValue = "id") String orderBy     //ordenacao
       ){
      
       PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction),orderBy);
-      Page<AttendDTO> list = service.getAttendees(pageRequest,name,email,balance);
+      Page<AttendDTO> list = service.getAttendees(pageRequest);
       return ResponseEntity.ok(list);
         
     }

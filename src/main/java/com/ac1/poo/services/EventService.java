@@ -10,8 +10,10 @@ import javax.persistence.EntityNotFoundException;
 
 import com.ac1.poo.dto.EventDTO;
 import com.ac1.poo.dto.EventInsertDTO;
+import com.ac1.poo.entities.Admin;
 import com.ac1.poo.entities.Event;
 import com.ac1.poo.repositories.EventRepository;
+import com.ac1.poo.repositories.AdminRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -26,6 +28,9 @@ public class EventService {
 
     @Autowired
     private EventRepository repo;
+
+    @Autowired
+    private AdminRepository adminRepo;
 
     
     public Page<EventDTO> getEvents(PageRequest pageRequest,String name,String place, String description, String start_date) {
@@ -54,11 +59,15 @@ public class EventService {
     }
     public EventDTO insert(EventInsertDTO event){
         Event entity = new Event(event);
+        Optional<Admin> op = adminRepo.findById(event.getAdminId());
+        Admin owner = op.orElseThrow( () ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "Administrador não está cadastrado!"));
+
         if(event.getEnd_date().isBefore(event.getStart_date()))
         {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Data de fim menor que a data de inicio!");
         }
         else{
+            entity.setAdmin(owner);
             entity = repo.save(entity);
             return new EventDTO(entity);
         }

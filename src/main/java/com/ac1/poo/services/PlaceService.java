@@ -24,9 +24,9 @@ public class PlaceService {
     @Autowired
     private PlaceRepository repo;
 
-    public Page<PlaceDTO> getPlaces(PageRequest pageRequest,String name,String address) {
+    public Page<PlaceDTO> getPlaces(PageRequest pageRequest) {
         
-            Page<Place> list = repo.find(pageRequest,name,address);
+            Page<Place> list = repo.find(pageRequest);
             return list.map(e -> new PlaceDTO(e) );
     }
     public Place save(Place place)

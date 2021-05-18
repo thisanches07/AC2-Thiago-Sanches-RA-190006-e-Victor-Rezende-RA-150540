@@ -12,11 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PlaceRepository extends JpaRepository <Place,Long>{
 
-    @Query("SELECT p FROM Place p " +
-            "WHERE" +
-             "(p.name LIKE CONCAT('%', :name,'%')) AND " +
-             "(p.address LIKE CONCAT('%', :address,'%'))"
-    )
-    public Page<Place> find(Pageable pagerequest,String name,String address);
+    @Query("SELECT p FROM Place p ")
+    public Page<Place> find(Pageable pagerequest);
 }
 
