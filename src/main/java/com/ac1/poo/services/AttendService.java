@@ -8,6 +8,7 @@ import javax.persistence.EntityNotFoundException;
 
 import com.ac1.poo.dto.AttendDTO;
 import com.ac1.poo.dto.AttendInsertDTO;
+import com.ac1.poo.dto.AttendUpdateDTO;
 import com.ac1.poo.entities.Attend;
 import com.ac1.poo.repositories.AttendRepository;
 
@@ -26,51 +27,41 @@ public class AttendService {
 
     public Page<AttendDTO> getAttendees(PageRequest pageRequest) {
         
-            Page<Attend> list = repo.find(pageRequest);
-            return list.map(e -> new AttendDTO(e) );
+        Page<Attend> list = repo.find(pageRequest);
+        return list.map(e -> new AttendDTO(e) );
     }
-    public Attend save(Attend attend)
-    {
-            return repo.save(attend);       
-    }
+    
     public AttendDTO getAttendeeById(long id) {
         Optional<Attend> op = repo.findById(id);
         Attend attend = op.orElseThrow( () ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "Attend não está cadastrado!"));
         return new AttendDTO(attend);
     }
+
     public AttendDTO insert(AttendInsertDTO attend){
         Attend entity = new Attend(attend);
-            entity = repo.save(entity);
-            return new AttendDTO(entity);
-        }
-    public AttendDTO update(AttendDTO attendUpdateDTO,long id)
+        entity = repo.save(entity);
+        return new AttendDTO(entity);
+    }
+
+    public AttendDTO update(AttendUpdateDTO attendUpdateDTO,long id)
     {
- 
         try
         {
-
             Attend attend = repo.getOne(id);
-                if(attend.getName()!=null)
-                attend.setName(attendUpdateDTO.getName());
-                if(attend.getEmail()!=null)    
-                attend.setEmail(attendUpdateDTO.getEmail());
-                if(attend.getBalance()!=null)
-                attend.setBalance(attendUpdateDTO.getBalance());
-                attend = repo.save(attend);         
+            if(attend.getName()!=null)
+            attend.setName(attendUpdateDTO.getName());
+            if(attend.getEmail()!=null)    
+            attend.setEmail(attendUpdateDTO.getEmail());
+            if(attend.getBalance()!=null)
+            attend.setBalance(attendUpdateDTO.getBalance());
+            attend = repo.save(attend);         
             return new AttendDTO(attend);
         }
         catch(EntityNotFoundException ex){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Attend not found");
-          }
+        }
     }
-    public void remover(long id)
-    {     try{
-                repo.deleteById(id);       
-            }
-            catch(EmptyResultDataAccessException e){
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Attend not found");
-            }
-    } 
+
     public List<AttendDTO> toDTOList(List<Attend> list) {
 
         List<AttendDTO> listDTO = new ArrayList<>();
@@ -81,6 +72,7 @@ public class AttendService {
         }
         return listDTO;
     }
+
     public void delete(Long id){
         try{
             repo.deleteById(id);

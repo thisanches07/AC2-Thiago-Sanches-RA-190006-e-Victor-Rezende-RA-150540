@@ -15,17 +15,15 @@ import com.ac1.poo.dto.AdminInsertDTO;
 @PrimaryKeyJoinColumn(name="BASEUSER_ID")
 public class Admin extends BaseUser {
 
-    
     private String phoneNumber;
 
     @OneToMany(mappedBy = "admin")
     private List<Event> events = new ArrayList<>();
 
-    
-
     public Admin(){
 
     }
+    
     public Admin(AdminInsertDTO admin){
         super(admin.getName(),admin.getEmail());
         this.phoneNumber = admin.getPhoneNumber();

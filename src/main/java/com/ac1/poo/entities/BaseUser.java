@@ -10,8 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
+
 
 @Entity
 @Table(name="TB_BASEUSER")
@@ -21,13 +20,9 @@ public class BaseUser implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @NotEmpty(message="Usuário tem que ter um nome")
-    @NotBlank(message="Usuário tem que ter um nome")
+    
     private String name;
-
-    @NotEmpty(message="Usuário tem que ter um email")
-    @NotBlank(message="Usuário tem que ter um email")
+    
     @Column(unique = true)
     private String email;
 
@@ -43,18 +38,23 @@ public class BaseUser implements Serializable {
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
+
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public String getEmail() {
         return email;
     }
+    
     public void setEmail(String email) {
         this.email = email;
     }

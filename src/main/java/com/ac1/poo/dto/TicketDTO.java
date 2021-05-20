@@ -6,6 +6,7 @@ import com.ac1.poo.entities.Ticket;
 import com.ac1.poo.entities.TicketType;
 
 public class TicketDTO {
+
     private Long id;
     private TicketType type;
     private LocalDate date;
@@ -27,9 +28,11 @@ public class TicketDTO {
         this.date = ticket.getDate();
         this.price = ticket.getPrice();
     }
+
     public Long getId() {
         return id;
     }
+    
     public void setId(Long id) {
         this.id = id;
     }

@@ -31,32 +31,26 @@ public class EventService {
 
     @Autowired
     private AdminRepository adminRepo;
-
     
-    public Page<EventDTO> getEvents(PageRequest pageRequest,String name,String place, String description, String start_date) {
-        if(start_date.isEmpty())
-        {
-            Page<Event> list = repo.find(pageRequest,name,place,description);
+    public Page<EventDTO> getEvents(PageRequest pageRequest,String name, String description, String start_date) {
+        if(start_date.isEmpty()){
+            Page<Event> list = repo.find(pageRequest,name,description);
             return list.map(e -> new EventDTO(e) );
-        }else{
+        }
+        else{
             DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             LocalDate date = LocalDate.parse(start_date,formato);
-            Page<Event> list = repo.find(pageRequest,name,place,description,date);
+            Page<Event> list = repo.find(pageRequest,name,description,date);
             return list.map(e -> new EventDTO(e) );
         }
     }
-    public Event save(Event event)
-    {
-            return repo.save(event);
-            
-    }
-
 
     public EventDTO getEventById(long id) {
         Optional<Event> op = repo.findById(id);
         Event event = op.orElseThrow( () ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "Evento não está cadastrado!"));
         return new EventDTO(event);
     }
+
     public EventDTO insert(EventInsertDTO event){
         Event entity = new Event(event);
         Optional<Admin> op = adminRepo.findById(event.getAdminId());
@@ -72,54 +66,37 @@ public class EventService {
             return new EventDTO(entity);
         }
     }
-    public EventDTO update(EventDTO eventUpdateDTO,long id)
-    {
- 
-        try
-        {
 
+    public EventDTO update(EventDTO eventUpdateDTO,long id){
+        try{
             Event event = repo.getOne(id);
-                if(event.getDescription()!=null)
-                event.setDescription(eventUpdateDTO.getDescription());
-                if(event.getStart_date()!=null)    
-                event.setStart_date(eventUpdateDTO.getStart_date());
-                if(event.getStart_time()!=null)
-                event.setStart_time(eventUpdateDTO.getStart_time());
-                if(event.getEnd_date()!=null)    
-                event.setEnd_date(eventUpdateDTO.getEnd_date());
-                if(event.getEnd_time()!=null)    
-                event.setEnd_time(eventUpdateDTO.getEnd_time());
-                if(event.getPlace()!=null)
-                event.setPlace(eventUpdateDTO.getPlace());
-                event = repo.save(event);
-           
+            if(event.getDescription()!=null)
+            event.setDescription(eventUpdateDTO.getDescription());
+            if(event.getStart_date()!=null)    
+            event.setStart_date(eventUpdateDTO.getStart_date());
+            if(event.getStart_time()!=null)
+            event.setStart_time(eventUpdateDTO.getStart_time());
+            if(event.getEnd_date()!=null)    
+            event.setEnd_date(eventUpdateDTO.getEnd_date());
+            if(event.getEnd_time()!=null)    
+            event.setEnd_time(eventUpdateDTO.getEnd_time());
+            event = repo.save(event);
             return new EventDTO(event);
         }
         catch(EntityNotFoundException ex){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
-          }
+        }
     }
-    public void remover(long id)
-    {     try{
 
-                repo.deleteById(id);       
-            }
-            catch(EmptyResultDataAccessException e){
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
-            }
-    } 
     public List<EventDTO> toDTOList(List<Event> list) {
-
         List<EventDTO> listDTO = new ArrayList<>();
-
         for (Event e : list) {
-            EventDTO event = new EventDTO(e.getId(), e.getName(),e.getDescription(),e.getPlace(),e.getStart_date(),e.getEnd_date(),e.getStart_time(),e.getEnd_time(),e.getEmail_contact(),e.getAmountFreeTickets(),e.getAmountPayedTickets(),e.getPriceTicket());
+            EventDTO event = new EventDTO(e.getId(), e.getName(),e.getDescription(),e.getStart_date(),e.getEnd_date(),e.getStart_time(),e.getEnd_time(),e.getEmail_contact(),e.getAmountFreeTickets(),e.getAmountPayedTickets(),e.getPriceTicket());
             listDTO.add(event);
         }
-        
-
         return listDTO;
     }
+
     public void delete(Long id){
         try{
             repo.deleteById(id);

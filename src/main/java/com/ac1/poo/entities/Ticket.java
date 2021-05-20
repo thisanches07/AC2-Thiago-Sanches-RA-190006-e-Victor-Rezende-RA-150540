@@ -18,13 +18,17 @@ public class Ticket implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private TicketType type;
+
     private LocalDate date;
+
     private Double price;
     
     public Ticket(){
 
     }
+
     public Ticket(TicketInsertDTO place){
         this.type = place.getType();
         this.date = place.getDate();
@@ -34,24 +38,31 @@ public class Ticket implements Serializable{
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
+
     public TicketType getType() {
         return type;
     }
+
     public void setType(TicketType type) {
         this.type = type;
     }
+
     public LocalDate getDate() {
         return date;
     }
+
     public void setDate(LocalDate date) {
         this.date = date;
     }
+
     public Double getPrice() {
         return price;
     }
+
     public void setPrice(Double price) {
         this.price = price;
     }
@@ -63,6 +74,7 @@ public class Ticket implements Serializable{
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         return result;
     }
+    
     @Override
     public boolean equals(Object obj) {
         if (this == obj)

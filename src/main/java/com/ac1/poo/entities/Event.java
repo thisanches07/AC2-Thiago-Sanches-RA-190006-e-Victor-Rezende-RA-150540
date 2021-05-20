@@ -23,25 +23,34 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 @Table(name="TB_EVENT")
 public class Event implements Serializable{
+
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
+
     private String description;
-    private String place;
+
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate start_date;
+
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate end_date;
-    private LocalTime start_time;
-    private LocalTime end_time;
-    private String email_contact;
-    private Long amountFreeTickets;
-    private Long amountPayedTickets;
-    private Double priceTicket;
 
-    
+    private LocalTime start_time;
+
+    private LocalTime end_time;
+
+    private String email_contact;
+
+    private Long amountFreeTickets;
+
+    private Long amountPayedTickets;
+
+    private Double priceTicket;
 
     @OneToMany( cascade = CascadeType.PERSIST)
     @JoinColumn(name="EVENT_ID")
@@ -56,10 +65,10 @@ public class Event implements Serializable{
     public Event(){
 
     }
+
     public Event(EventInsertDTO event){
         this.name = event.getName();
         this.description = event.getDescription();
-        this.place = event.getPlace();
         this.start_date = event.getStart_date();
         this.end_date = event.getEnd_date();
         this.start_time = event.getStart_time();
@@ -69,6 +78,7 @@ public class Event implements Serializable{
         this.amountPayedTickets = event.getAmountPayedTickets();
         this.priceTicket = event.getPriceTicket();
     }
+
     public Long getId() {
         return id;
     }
@@ -91,14 +101,6 @@ public class Event implements Serializable{
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getPlace() {
-        return place;
-    }
-
-    public void setPlace(String place) {
-        this.place = place;
     }
 
     public LocalDate getStart_date() {
