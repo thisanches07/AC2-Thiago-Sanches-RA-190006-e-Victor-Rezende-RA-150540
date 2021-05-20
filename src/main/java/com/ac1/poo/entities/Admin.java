@@ -18,7 +18,7 @@ public class Admin extends BaseUser {
     
     private String phoneNumber;
 
-    @OneToMany(mappedBy = "Admin")
+    @OneToMany(mappedBy = "admin")
     private List<Event> events = new ArrayList<>();
 
     
