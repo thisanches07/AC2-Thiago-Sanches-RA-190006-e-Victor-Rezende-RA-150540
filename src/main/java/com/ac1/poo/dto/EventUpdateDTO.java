@@ -6,8 +6,6 @@ import java.time.LocalTime;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-
-import com.ac1.poo.entities.Event;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 
