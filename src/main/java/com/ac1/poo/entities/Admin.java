@@ -15,6 +15,7 @@ import com.ac1.poo.dto.AdminInsertDTO;
 @PrimaryKeyJoinColumn(name="BASEUSER_ID")
 public class Admin extends BaseUser {
 
+    
     private String phoneNumber;
 
     @OneToMany(mappedBy = "Admin")
