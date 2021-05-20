@@ -58,7 +58,7 @@ public class AdminController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AdminDTO> update(@RequestBody AdminUpdateDTO adminUpdateDTO,
+    public ResponseEntity<AdminDTO> update(@Valid @RequestBody AdminUpdateDTO adminUpdateDTO,
                                     @PathVariable long id)
     {
       AdminDTO event = service.update(adminUpdateDTO, id);

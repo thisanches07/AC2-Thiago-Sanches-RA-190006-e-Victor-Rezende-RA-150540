@@ -48,11 +48,8 @@ public class AttendService {
         try
         {
             Attend attend = repo.getOne(id);
-            if(attend.getName()!=null)
-            attend.setName(attendUpdateDTO.getName());
-            if(attend.getEmail()!=null)    
+            attend.setName(attendUpdateDTO.getName());   
             attend.setEmail(attendUpdateDTO.getEmail());
-            if(attend.getBalance()!=null)
             attend.setBalance(attendUpdateDTO.getBalance());
             attend = repo.save(attend);         
             return new AttendDTO(attend);

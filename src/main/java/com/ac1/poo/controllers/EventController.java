@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import com.ac1.poo.dto.EventDTO;
 import com.ac1.poo.dto.EventInsertDTO;
+import com.ac1.poo.dto.EventUpdateDTO;
 import com.ac1.poo.services.EventService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +62,7 @@ public class EventController {
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<EventDTO> update(@Valid @RequestBody EventDTO eventUpdateDTO,
+  public ResponseEntity<EventDTO> update(@Valid @RequestBody EventUpdateDTO eventUpdateDTO,
                                     @PathVariable long id)
   {
     EventDTO event = service.update(eventUpdateDTO, id);

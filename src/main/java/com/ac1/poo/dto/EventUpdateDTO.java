@@ -5,8 +5,11 @@ import java.time.LocalTime;
 
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
+import com.ac1.poo.entities.Event;
 import com.fasterxml.jackson.annotation.JsonFormat;
+
 
 public class EventUpdateDTO {
 
@@ -17,34 +20,40 @@ public class EventUpdateDTO {
     private String description;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
-    @NotEmpty(message="Evento tem que ter uma data de inicio")
+    @NotNull(message="Evento tem que ter uma data de inicio")
     private LocalDate start_date;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
-    @NotEmpty(message="Evento tem que ter uma data de fim")
+    @NotNull(message="Evento tem que ter uma data de fim")
     private LocalDate end_date;
 
-    @NotEmpty(message="Evento tem que ter um horário de início")
+    @NotNull(message="Evento tem que ter um horário de início")
     private LocalTime start_time;
 
-    @NotEmpty(message="Evento tem que ter um horário de fim")
+    @NotNull(message="Evento tem que ter um horário de fim")
     private LocalTime end_time;
 
     @NotEmpty(message="Evento tem que ter um email")
     private String email_contact;
 
-    @NotEmpty(message="Evento tem que ter um email")
+    @NotNull(message="Evento tem que ter um email")
     @DecimalMin(value ="0.0", message = "Número de tickets gratuitos tem que ser maior ou igual a zero")
     private Long amountFreeTickets;
 
-    @NotEmpty(message="Número de tickets pagos tem que ser difrente de null")
+    @NotNull(message="Número de tickets pagos tem que ser difrente de null")
     @DecimalMin(value ="0.0", message = "Número de tickets pagos tem que ser maior ou igual a zero")
     private Long amountPayedTickets;
 
-    @NotEmpty(message="Tickets pagos do evento precisam ter um valor")
+    @NotNull(message="Tickets pagos do evento precisam ter um valor")
     @DecimalMin(value ="0.0", message = "Preço dos tickets tem que ser maior que zero")
     private Double priceTicket;
-
+   
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
     public String getDescription() {
         return description;
     }
@@ -92,4 +101,29 @@ public class EventUpdateDTO {
     public void setEmail_contact(String email_contact) {
         this.email_contact = email_contact;
     }
+
+    public Long getAmountFreeTickets() {
+        return amountFreeTickets;
+    }
+
+    public void setAmountFreeTickets(Long amountFreeTickets) {
+        this.amountFreeTickets = amountFreeTickets;
+    }
+
+    public Long getAmountPayedTickets() {
+        return amountPayedTickets;
+    }
+
+    public void setAmountPayedTickets(Long amountPayedTickets) {
+        this.amountPayedTickets = amountPayedTickets;
+    }
+
+    public Double getPriceTicket() {
+        return priceTicket;
+    }
+
+    public void setPriceTicket(Double priceTicket) {
+        this.priceTicket = priceTicket;
+    }
+    
 }

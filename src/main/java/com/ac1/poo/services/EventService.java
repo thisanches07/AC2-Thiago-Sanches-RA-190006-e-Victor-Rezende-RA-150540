@@ -10,6 +10,7 @@ import javax.persistence.EntityNotFoundException;
 
 import com.ac1.poo.dto.EventDTO;
 import com.ac1.poo.dto.EventInsertDTO;
+import com.ac1.poo.dto.EventUpdateDTO;
 import com.ac1.poo.entities.Admin;
 import com.ac1.poo.entities.Event;
 import com.ac1.poo.repositories.EventRepository;
@@ -67,19 +68,17 @@ public class EventService {
         }
     }
 
-    public EventDTO update(EventDTO eventUpdateDTO,long id){
+    public EventDTO update(EventUpdateDTO eventUpdateDTO,long id){
         try{
             Event event = repo.getOne(id);
-            if(event.getDescription()!=null)
             event.setDescription(eventUpdateDTO.getDescription());
-            if(event.getStart_date()!=null)    
             event.setStart_date(eventUpdateDTO.getStart_date());
-            if(event.getStart_time()!=null)
             event.setStart_time(eventUpdateDTO.getStart_time());
-            if(event.getEnd_date()!=null)    
             event.setEnd_date(eventUpdateDTO.getEnd_date());
-            if(event.getEnd_time()!=null)    
             event.setEnd_time(eventUpdateDTO.getEnd_time());
+            event.setAmountFreeTickets(eventUpdateDTO.getAmountFreeTickets());
+            event.setAmountPayedTickets(eventUpdateDTO.getAmountPayedTickets());
+            event.setPriceTicket(eventUpdateDTO.getPriceTicket());
             event = repo.save(event);
             return new EventDTO(event);
         }

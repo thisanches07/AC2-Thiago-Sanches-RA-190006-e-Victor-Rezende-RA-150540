@@ -33,7 +33,7 @@ public class AttendController {
     private AttendService service;
     
     @GetMapping
-    public ResponseEntity<Page<AttendDTO>> getAttend(
+    public ResponseEntity<Page<AttendDTO>> getAttendees(
         @RequestParam(value = "page",         defaultValue = "0")Integer page,          //pagina corrente
         @RequestParam(value = "linesPerPage", defaultValue = "6") Integer linesPerPage, //linhas por pagina
         @RequestParam(value = "direction",    defaultValue = "ASC") String direction,   //direcao

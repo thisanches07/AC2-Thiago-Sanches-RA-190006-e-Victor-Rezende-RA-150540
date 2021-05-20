@@ -47,9 +47,7 @@ public class PlaceService {
         try
         {
             Place place = repo.getOne(id);
-            if(place.getName()!=null)
             place.setName(placeUpdateDTO.getName());
-            if(place.getAddress()!=null)    
             place.setAddress(placeUpdateDTO.getAddress());
             place = repo.save(place);         
             return new PlaceDTO(place);

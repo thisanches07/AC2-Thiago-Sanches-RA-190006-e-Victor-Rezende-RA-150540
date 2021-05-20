@@ -33,7 +33,7 @@ public class AdminService {
 
     public AdminDTO getAdminById(long id) {
         Optional<Admin> op = repo.findById(id);
-        Admin admin = op.orElseThrow( () ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "Admino não está cadastrado!"));
+        Admin admin = op.orElseThrow( () ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "Admin não está cadastrado!"));
         return new AdminDTO(admin);
     }
 
@@ -48,11 +48,8 @@ public class AdminService {
         try
         {
             Admin admin = repo.getOne(id);
-            if(admin.getName()!=null)
-            admin.setName(adminUpdateDTO.getName());
-            if(admin.getEmail()!=null)    
+            admin.setName(adminUpdateDTO.getName());   
             admin.setEmail(adminUpdateDTO.getEmail());
-            if(admin.getPhoneNumber()!=null)
             admin.setPhoneNumber(adminUpdateDTO.getPhoneNumber());
             admin = repo.save(admin);         
             return new AdminDTO(admin);

@@ -23,6 +23,9 @@ public class Attend extends BaseUser {
     @JoinColumn(name="ATTENDEE_ID")
     private List<Ticket> tickets = new ArrayList<>();
 
+    public Attend(){
+    }
+
     public Attend(AttendInsertDTO attend){
         super(attend.getName(),attend.getEmail());
         this.balance = attend.getBalance();
