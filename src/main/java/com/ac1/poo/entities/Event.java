@@ -60,6 +60,7 @@ public class Event implements Serializable{
     private List<Place> places = new ArrayList<>();
 
     @ManyToOne
+    @JoinColumn(name="ADMIN_ID")
     private Admin admin;
     
     public Event(){
