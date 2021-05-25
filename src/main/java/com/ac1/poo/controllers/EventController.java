@@ -75,6 +75,14 @@ public class EventController {
     service.delete(id);
     return ResponseEntity.noContent().build();
   }
+
+  @PostMapping("/{id}/places/{idLocal}")
+  public ResponseEntity<Boolean> addLocal(@PathVariable long id, @PathVariable long idLocal) {
+    Boolean adicionado = service.addLocal(id, idLocal);
+    URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(id).toUri();                                      
+    return ResponseEntity.created(uri).body(adicionado);                             
+  }
+
 }
 
 

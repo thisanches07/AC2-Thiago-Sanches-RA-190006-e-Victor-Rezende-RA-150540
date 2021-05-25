@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -56,7 +57,12 @@ public class Event implements Serializable{
     @JoinColumn(name="EVENT_ID")
     private List<Ticket> tickets = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "events")
+    @ManyToMany
+    @JoinTable(
+            name="TB_PLACES_EVENTS",
+            joinColumns =  @JoinColumn(name="EVENT_ID"),
+            inverseJoinColumns = @JoinColumn(name="PLACE_ID")
+    )
     private List<Place> places = new ArrayList<>();
 
     @ManyToOne

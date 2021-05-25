@@ -13,7 +13,9 @@ import com.ac1.poo.dto.EventInsertDTO;
 import com.ac1.poo.dto.EventUpdateDTO;
 import com.ac1.poo.entities.Admin;
 import com.ac1.poo.entities.Event;
+import com.ac1.poo.entities.Place;
 import com.ac1.poo.repositories.EventRepository;
+import com.ac1.poo.repositories.PlaceRepository;
 import com.ac1.poo.repositories.AdminRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
@@ -32,6 +35,9 @@ public class EventService {
 
     @Autowired
     private AdminRepository adminRepo;
+
+    @Autowired
+    private PlaceRepository placeRepo;
     
     public Page<EventDTO> getEvents(PageRequest pageRequest,String name, String description, String start_date) {
         if(start_date.isEmpty()){
@@ -103,5 +109,17 @@ public class EventService {
         catch(EmptyResultDataAccessException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
         }
+    }
+
+    @Transactional
+    public Boolean addLocal(long id, long idLocal) {
+        Optional<Event> op = repo.findById(id);
+        Event event = op.orElseThrow( () ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "Evento não está cadastrado!"));
+        Optional<Place> op2 = placeRepo.findById(idLocal);
+        Place place = op2.orElseThrow( () ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "Place não está cadastrado!"));
+
+        event.addPlace(place);
+
+        return true;
     }
 }
