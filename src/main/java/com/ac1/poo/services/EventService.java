@@ -62,10 +62,13 @@ public class EventService {
         Event entity = new Event(event);
         Optional<Admin> op = adminRepo.findById(event.getAdminId());
         Admin owner = op.orElseThrow( () ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "Administrador não está cadastrado!"));
-
         if(event.getEnd_date().isBefore(event.getStart_date()))
         {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Data de fim menor que a data de inicio!");
+        }
+        if(event.getStart_date().isBefore(java.time.LocalDate.now()))
+        {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Data do evento anterior à data atual!");
         }
         else{
             entity.setAdmin(owner);
