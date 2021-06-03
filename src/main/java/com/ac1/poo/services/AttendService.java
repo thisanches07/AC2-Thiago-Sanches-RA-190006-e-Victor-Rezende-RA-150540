@@ -38,9 +38,17 @@ public class AttendService {
     }
 
     public AttendDTO insert(AttendInsertDTO attend){
-        Attend entity = new Attend(attend);
-        entity = repo.save(entity);
-        return new AttendDTO(entity);
+        Optional<Attend> repetido = repo.findEmail(attend.getEmail());
+        if( !repetido.isPresent()){
+            Attend entity = new Attend(attend);
+            entity = repo.save(entity);
+            return new AttendDTO(entity);
+        }
+        else{
+            throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED, "Já existe um usuário com esse email!!!");
+        }
+        
+        
     }
 
     public AttendDTO update(AttendUpdateDTO attendUpdateDTO,long id)

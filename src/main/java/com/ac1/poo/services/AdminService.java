@@ -38,9 +38,15 @@ public class AdminService {
     }
 
     public AdminDTO insert(AdminInsertDTO admin){
-        Admin entity = new Admin(admin);
-        entity = repo.save(entity);
-        return new AdminDTO(entity);
+        Optional<Admin> repetido = repo.findEmail(admin.getEmail());
+        if( !repetido.isPresent()){
+            Admin entity = new Admin(admin);
+            entity = repo.save(entity);
+            return new AdminDTO(entity);
+        }
+        else{
+            throw new ResponseStatusException(HttpStatus.METHOD_NOT_ALLOWED, "Já existe um usuário com esse email!!!");
+        }
     }
 
     public AdminDTO update(AdminUpdateDTO adminUpdateDTO,long id)
