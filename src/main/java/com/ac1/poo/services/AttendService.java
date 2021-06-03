@@ -58,7 +58,6 @@ public class AttendService {
             Attend attend = repo.getOne(id);
             attend.setName(attendUpdateDTO.getName());   
             attend.setEmail(attendUpdateDTO.getEmail());
-            attend.setBalance(attendUpdateDTO.getBalance());
             attend = repo.save(attend);         
             return new AttendDTO(attend);
         }
