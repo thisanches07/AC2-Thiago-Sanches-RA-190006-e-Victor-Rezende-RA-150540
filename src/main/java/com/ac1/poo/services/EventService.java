@@ -140,6 +140,10 @@ public class EventService {
                     {
                         throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Local do evento já alugado neste período" );
                     }
+                    if(event.getStart_date().isEqual(e.getEnd_date()) || event.getEnd_date().isEqual(e.getStart_date()))
+                    {
+                        throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Local do evento já alugado neste período" );
+                    }
                 }
             }
         }
