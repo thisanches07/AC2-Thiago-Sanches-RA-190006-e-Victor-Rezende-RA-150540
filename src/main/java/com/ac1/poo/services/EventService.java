@@ -38,7 +38,7 @@ public class EventService {
 
     @Autowired
     private PlaceRepository placeRepo;
-    
+
     public Page<EventDTO> getEvents(PageRequest pageRequest,String name, String description, String start_date) {
         if(start_date.isEmpty()){
             Page<Event> list = repo.find(pageRequest,name,description);
@@ -120,9 +120,30 @@ public class EventService {
         Event event = op.orElseThrow( () ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "Evento não está cadastrado!"));
         Optional<Place> op2 = placeRepo.findById(idLocal);
         Place place = op2.orElseThrow( () ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "Place não está cadastrado!"));
+        for(Event e: repo.findAll())
+        {   
+            for (Place p:e.getPlaces())
+            {
+                if(p.getId() == idLocal)
+                {
 
+                    if(event.getEnd_date().isAfter(e.getStart_date()) && event.getEnd_date().isBefore(e.getEnd_date()))
+                    {
+                        throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Local do evento já alugado neste período");
+                    }
+                   
+                    if(event.getStart_date().isAfter(e.getStart_date()) && event.getStart_date().isBefore(e.getEnd_date()))
+                    {
+                        throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Local do evento já alugado neste período");
+                    }
+                    if(event.getStart_date().isEqual(e.getStart_date()) || event.getEnd_date().isEqual(e.getEnd_date()))
+                    {
+                        throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Local do evento já alugado neste período" );
+                    }
+                }
+            }
+        }
         event.addPlace(place);
-
         return true;
     }
 }
