@@ -150,4 +150,13 @@ public class EventService {
         event.addPlace(place);
         return true;
     }
+    @Transactional
+    public Boolean removeLocal(long id, long idLocal) {
+        Optional<Event> op = repo.findById(id);
+        Event event = op.orElseThrow( () ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "Evento não está cadastrado!"));
+        Optional<Place> op2 = placeRepo.findById(idLocal);
+        Place place = op2.orElseThrow( () ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "Place não está cadastrado!"));
+        event.removePlace(place);
+        return true;
+    }
 }

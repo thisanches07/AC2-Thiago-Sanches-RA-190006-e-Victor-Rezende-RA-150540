@@ -174,6 +174,9 @@ public class Event implements Serializable{
     public void addPlace(Place place) {
         this.places.add(place);
     }
+    public void removePlace(Place place) {
+        this.places.remove(place);
+    }
     public Admin getAdmin() {
         return admin;
     }
