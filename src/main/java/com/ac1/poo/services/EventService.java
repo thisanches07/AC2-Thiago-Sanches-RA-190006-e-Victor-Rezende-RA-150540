@@ -7,16 +7,24 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
 
 import com.ac1.poo.dto.EventDTO;
 import com.ac1.poo.dto.EventInsertDTO;
 import com.ac1.poo.dto.EventUpdateDTO;
+import com.ac1.poo.dto.TicketDTO;
+import com.ac1.poo.dto.TicketInsertDTO;
 import com.ac1.poo.entities.Admin;
+import com.ac1.poo.entities.Attend;
 import com.ac1.poo.entities.Event;
 import com.ac1.poo.entities.Place;
+import com.ac1.poo.entities.Ticket;
+import com.ac1.poo.entities.TicketType;
 import com.ac1.poo.repositories.EventRepository;
 import com.ac1.poo.repositories.PlaceRepository;
+import com.ac1.poo.repositories.TicketRepository;
 import com.ac1.poo.repositories.AdminRepository;
+import com.ac1.poo.repositories.AttendRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -37,7 +45,13 @@ public class EventService {
     private AdminRepository adminRepo;
 
     @Autowired
+    private AttendRepository attendRepo;
+
+    @Autowired
     private PlaceRepository placeRepo;
+
+    @Autowired
+    private TicketRepository ticketRepo;
     
     public Page<EventDTO> getEvents(PageRequest pageRequest,String name, String description, String start_date) {
         if(start_date.isEmpty()){
@@ -124,5 +138,30 @@ public class EventService {
         event.addPlace(place);
 
         return true;
+    }
+
+    public TicketDTO insertTicket(@Valid TicketInsertDTO ticketDTO, Long id) {
+        Optional<Event> op = repo.findById(id);
+        Event event = op.orElseThrow( () ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "Evento não está cadastrado!"));
+        Optional<Attend> op2 = attendRepo.findById(ticketDTO.getAttendId());
+        Attend attend = op2.orElseThrow( () ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "Attend não está cadastrado!"));
+
+        Ticket entity = new Ticket(ticketDTO);
+        entity.setDate(LocalDate.now());
+        if(ticketDTO.getType()==TicketType.PAGO)
+            entity.setPrice(event.getPriceTicket());
+        else{
+            entity.setPrice(0.0);
+        }
+        entity.setType(ticketDTO.getType());
+
+        attend.addTickets(entity);
+        event.addTickets(entity);
+        
+        ticketRepo.save(entity);
+        attendRepo.save(attend);
+        repo.save(event);
+
+        return new TicketDTO(entity);
     }
 }

@@ -6,7 +6,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
+//import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -53,7 +53,7 @@ public class Event implements Serializable{
 
     private Double priceTicket;
 
-    @OneToMany( cascade = CascadeType.PERSIST)
+    @OneToMany
     @JoinColumn(name="EVENT_ID")
     private List<Ticket> tickets = new ArrayList<>();
 
@@ -179,6 +179,14 @@ public class Event implements Serializable{
     }
     public void setAdmin(Admin admin) {
         this.admin = admin;
+    }
+
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void addTickets(Ticket tickets) {
+        this.tickets.add(tickets);
     }
 
     @Override

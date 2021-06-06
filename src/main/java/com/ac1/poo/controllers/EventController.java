@@ -7,6 +7,8 @@ import javax.validation.Valid;
 import com.ac1.poo.dto.EventDTO;
 import com.ac1.poo.dto.EventInsertDTO;
 import com.ac1.poo.dto.EventUpdateDTO;
+import com.ac1.poo.dto.TicketDTO;
+import com.ac1.poo.dto.TicketInsertDTO;
 import com.ac1.poo.services.EventService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,6 +83,13 @@ public class EventController {
     Boolean adicionado = service.addLocal(id, idLocal);
     URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(id).toUri();                                      
     return ResponseEntity.created(uri).body(adicionado);                             
+  }
+
+  @PostMapping("/{id}/tickets")
+  public ResponseEntity<TicketDTO> vendaTicket(@Valid @RequestBody TicketInsertDTO ticketDTO, @PathVariable long id) {
+    TicketDTO ticket = service.insertTicket(ticketDTO, id);
+    URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(ticket.getId()).toUri();                                      
+    return ResponseEntity.created(uri).body(ticket);                             
   }
 
 }

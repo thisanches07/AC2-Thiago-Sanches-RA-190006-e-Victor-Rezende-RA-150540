@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.ac1.poo.dto.TicketInsertDTO;
@@ -24,6 +26,14 @@ public class Ticket implements Serializable{
     private LocalDate date;
 
     private Double price;
+
+    @ManyToOne
+    @JoinColumn(name="EVENT_ID")
+    private Event event;
+
+    @ManyToOne
+    @JoinColumn(name="ATTENDEE_ID")
+    private Attend attend;
     
     public Ticket(){
 
@@ -31,8 +41,6 @@ public class Ticket implements Serializable{
 
     public Ticket(TicketInsertDTO place){
         this.type = place.getType();
-        this.date = place.getDate();
-        this.price = place.getPrice();
     }
 
     public Long getId() {

@@ -1,15 +1,26 @@
 package com.ac1.poo.dto;
 
-import java.time.LocalDate;
+import javax.validation.constraints.NotNull;
 
 import com.ac1.poo.entities.TicketType;
 
 public class TicketInsertDTO {
 
+    @NotNull(message="Ticket tem que ter um tipo")
     private TicketType type;
-    private LocalDate date;
-    private Double price;
+
+    @NotNull(message="Ticket tem que ter um dono")
+    private Long attendId;
     
+
+    public Long getAttendId() {
+        return attendId;
+    }
+
+    public void setAttendId(Long attendId) {
+        this.attendId = attendId;
+    }
+
     public TicketType getType() {
         return type;
     }
@@ -18,21 +29,6 @@ public class TicketInsertDTO {
         this.type = type;
     }
 
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-    
-    public void setPrice(Double price) {
-        this.price = price;
-    }
     
     
    
