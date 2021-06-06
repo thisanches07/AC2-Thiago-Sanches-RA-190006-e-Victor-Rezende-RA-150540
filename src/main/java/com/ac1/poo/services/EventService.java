@@ -134,9 +134,43 @@ public class EventService {
         Event event = op.orElseThrow( () ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "Evento não está cadastrado!"));
         Optional<Place> op2 = placeRepo.findById(idLocal);
         Place place = op2.orElseThrow( () ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "Place não está cadastrado!"));
+        for(Event e: repo.findAll())
+        {   
+            for (Place p:e.getPlaces())
+            {
+                if(p.getId() == idLocal)
+                {
 
+                    if(event.getEnd_date().isAfter(e.getStart_date()) && event.getEnd_date().isBefore(e.getEnd_date()))
+                    {
+                        throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Local do evento já alugado neste período");
+                    }
+                   
+                    if(event.getStart_date().isAfter(e.getStart_date()) && event.getStart_date().isBefore(e.getEnd_date()))
+                    {
+                        throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Local do evento já alugado neste período");
+                    }
+                    if(event.getStart_date().isEqual(e.getStart_date()) || event.getEnd_date().isEqual(e.getEnd_date()))
+                    {
+                        throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Local do evento já alugado neste período" );
+                    }
+                    if(event.getStart_date().isEqual(e.getEnd_date()) || event.getEnd_date().isEqual(e.getStart_date()))
+                    {
+                        throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Local do evento já alugado neste período" );
+                    }
+                }
+            }
+        }
         event.addPlace(place);
-
+        return true;
+    }
+    @Transactional
+    public Boolean removeLocal(long id, long idLocal) {
+        Optional<Event> op = repo.findById(id);
+        Event event = op.orElseThrow( () ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "Evento não está cadastrado!"));
+        Optional<Place> op2 = placeRepo.findById(idLocal);
+        Place place = op2.orElseThrow( () ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "Place não está cadastrado!"));
+        event.removePlace(place);
         return true;
     }
 

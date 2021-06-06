@@ -92,6 +92,12 @@ public class EventController {
     return ResponseEntity.created(uri).body(ticket);                             
   }
 
+  @DeleteMapping("/{id}/places/{idLocal}")
+  public ResponseEntity<Boolean> removeLocal(@PathVariable long id, @PathVariable long idLocal) { 
+    Boolean adicionado = service.removeLocal(id, idLocal);
+    URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(id).toUri();                                      
+    return ResponseEntity.created(uri).body(adicionado);     
+  }
 }
 
 
