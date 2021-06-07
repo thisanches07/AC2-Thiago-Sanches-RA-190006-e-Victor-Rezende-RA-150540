@@ -180,13 +180,55 @@ public class EventService {
         Optional<Attend> op2 = attendRepo.findById(ticketDTO.getAttendId());
         Attend attend = op2.orElseThrow( () ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "Attend não está cadastrado!"));
 
+        List<Ticket> tickets = new ArrayList<>();
+        tickets = event.getTickets();
+        Integer counter = 0;
+
+        if(ticketDTO.getType()==TicketType.PAGO){
+            
+            for(Ticket t : tickets){
+                if (t.getType()==TicketType.PAGO)
+                    counter++;
+            }
+            if(counter>=event.getAmountPayedTickets()){
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Tickets pagos estão esgotados" );
+            }
+        
+        }
+        else{
+
+            for(Ticket t : tickets){
+                if (t.getType()==TicketType.GRATUITO)
+                    counter++;
+            }
+            if(counter>=event.getAmountFreeTickets()){
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Tickets gratuitos estão esgotados" );
+            }
+
+        }
+
+        tickets = attend.getTickets();
+        for(Ticket t : tickets){
+            if (t.getEvent().getId()==id)
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Visitante já possui ticket para o evento" );
+        }
+
         Ticket entity = new Ticket(ticketDTO);
-        entity.setDate(LocalDate.now());
-        if(ticketDTO.getType()==TicketType.PAGO)
-            entity.setPrice(event.getPriceTicket());
+
+        if(ticketDTO.getType()==TicketType.PAGO){
+            if(attend.getBalance()<event.getPriceTicket()){
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Visitante não possui créditos suficientes" );
+            }
+            else{
+                attend.setBalance(attend.getBalance() - event.getPriceTicket());
+                entity.setPrice(event.getPriceTicket());
+            }
+        } 
         else{
             entity.setPrice(0.0);
         }
+
+        entity.setDate(LocalDate.now());
         entity.setType(ticketDTO.getType());
 
         attend.addTickets(entity);
