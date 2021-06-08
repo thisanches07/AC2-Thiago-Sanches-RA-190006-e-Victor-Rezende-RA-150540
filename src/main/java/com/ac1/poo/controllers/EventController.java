@@ -98,6 +98,13 @@ public class EventController {
     URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(id).toUri();                                      
     return ResponseEntity.created(uri).body(adicionado);     
   }
+
+  @DeleteMapping("/{id}/tickets/{idTicket}")
+  public ResponseEntity<Void> removerTicket(@PathVariable long id, @PathVariable long idTicket)
+  {
+    service.deleteTicket(id, idTicket);
+    return ResponseEntity.noContent().build();
+  }
 }
 
 

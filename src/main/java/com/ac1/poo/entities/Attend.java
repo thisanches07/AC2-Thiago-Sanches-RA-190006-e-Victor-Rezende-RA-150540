@@ -46,5 +46,9 @@ public class Attend extends BaseUser {
     public void addTickets(Ticket tickets) {
         this.tickets.add(tickets);
     }
+
+    public void removeTickets(Ticket ticket) {
+        this.tickets.remove(ticket);
+    }
     
 }

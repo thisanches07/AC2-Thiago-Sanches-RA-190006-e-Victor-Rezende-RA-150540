@@ -182,7 +182,7 @@ public class EventService {
         Attend attend = op2.orElseThrow( () ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "Attend não está cadastrado!"));
 
         if(LocalDate.now().isAfter(event.getEnd_date())&&LocalTime.now().isAfter(event.getEnd_time()))
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"O evento já acabou!" );
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"O evento já acabou!" );
 
 
         List<Ticket> tickets = new ArrayList<>();
@@ -244,5 +244,30 @@ public class EventService {
         repo.save(event);
 
         return new TicketDTO(entity);
+    }
+
+    public void deleteTicket(long id, long idTicket) {
+        Optional<Ticket> op = ticketRepo.findById(idTicket);
+        Ticket ticket = op.orElseThrow( () ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "Ticket não existe!"));
+        Optional<Event> op2 = repo.findById(ticket.getEvent().getId());
+        Event event = op2.orElseThrow( () ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "Evento não está cadastrado!"));
+        Optional<Attend> op3 = attendRepo.findById(ticket.getAttend().getId());
+        Attend attend = op3.orElseThrow( () ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "Attend não está cadastrado!"));
+
+        
+
+        if(LocalDate.now().isAfter(event.getStart_date())&&LocalTime.now().isAfter(event.getStart_time()))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Não é possível devolver um ingresso depois que o evento começou!" );
+
+        if(ticket.getType()==TicketType.PAGO)
+            attend.setBalance(attend.getBalance()+ticket.getPrice());
+
+        event.removeTickets(ticket);
+        attend.removeTickets(ticket);
+        
+        ticketRepo.deleteById(id);
+
+        attendRepo.save(attend);
+        repo.save(event);
     }
 }

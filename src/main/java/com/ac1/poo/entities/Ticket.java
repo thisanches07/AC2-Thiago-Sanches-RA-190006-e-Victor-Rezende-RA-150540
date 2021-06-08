@@ -31,8 +31,6 @@ public class Ticket implements Serializable{
     @JoinColumn(name="EVENT_ID")
     private Event event;
 
-    
-
     @ManyToOne
     @JoinColumn(name="ATTENDEE_ID")
     private Attend attend;
@@ -83,6 +81,14 @@ public class Ticket implements Serializable{
 
     public void setEvent(Event event) {
         this.event = event;
+    }
+
+    public Attend getAttend() {
+        return attend;
+    }
+
+    public void setAttend(Attend attend) {
+        this.attend = attend;
     }
 
     @Override

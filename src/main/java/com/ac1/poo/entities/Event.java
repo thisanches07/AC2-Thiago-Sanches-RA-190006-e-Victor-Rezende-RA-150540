@@ -192,6 +192,10 @@ public class Event implements Serializable{
         this.tickets.add(tickets);
     }
 
+    public void removeTickets(Ticket ticket) {
+        this.tickets.remove(ticket);
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
