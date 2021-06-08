@@ -1,6 +1,7 @@
 package com.ac1.poo.services;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -180,6 +181,10 @@ public class EventService {
         Optional<Attend> op2 = attendRepo.findById(ticketDTO.getAttendId());
         Attend attend = op2.orElseThrow( () ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "Attend não está cadastrado!"));
 
+        if(LocalDate.now().isAfter(event.getEnd_date())&&LocalTime.now().isAfter(event.getEnd_time()))
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"O evento já acabou!" );
+
+
         List<Ticket> tickets = new ArrayList<>();
         tickets = event.getTickets();
         Integer counter = 0;
@@ -191,7 +196,7 @@ public class EventService {
                     counter++;
             }
             if(counter>=event.getAmountPayedTickets()){
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Tickets pagos estão esgotados" );
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Tickets pagos estão esgotados!" );
             }
         
         }
@@ -202,7 +207,7 @@ public class EventService {
                     counter++;
             }
             if(counter>=event.getAmountFreeTickets()){
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Tickets gratuitos estão esgotados" );
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Tickets gratuitos estão esgotados!" );
             }
 
         }
@@ -210,14 +215,14 @@ public class EventService {
         tickets = attend.getTickets();
         for(Ticket t : tickets){
             if (t.getEvent().getId()==id)
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Visitante já possui ticket para o evento" );
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Visitante já possui ticket para o evento!" );
         }
 
         Ticket entity = new Ticket(ticketDTO);
 
         if(ticketDTO.getType()==TicketType.PAGO){
             if(attend.getBalance()<event.getPriceTicket()){
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Visitante não possui créditos suficientes" );
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Visitante não possui créditos suficientes!" );
             }
             else{
                 attend.setBalance(attend.getBalance() - event.getPriceTicket());
