@@ -15,11 +15,13 @@ import com.ac1.poo.dto.EventInsertDTO;
 import com.ac1.poo.dto.EventUpdateDTO;
 import com.ac1.poo.dto.TicketDTO;
 import com.ac1.poo.dto.TicketInsertDTO;
+import com.ac1.poo.dto.TicketsConsultaDTO;
 import com.ac1.poo.entities.Admin;
 import com.ac1.poo.entities.Attend;
 import com.ac1.poo.entities.Event;
 import com.ac1.poo.entities.Place;
 import com.ac1.poo.entities.Ticket;
+import com.ac1.poo.entities.TicketAttendxType;
 import com.ac1.poo.entities.TicketType;
 import com.ac1.poo.repositories.EventRepository;
 import com.ac1.poo.repositories.PlaceRepository;
@@ -270,4 +272,27 @@ public class EventService {
         attendRepo.save(attend);
         repo.save(event);
     }
+    public TicketsConsultaDTO getTickets(long id){
+        Optional<Event> op = repo.findById(id);
+        Event event = op.orElseThrow( () ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "Evento não está cadastrado!"));
+     
+        List<Ticket> tickets = new ArrayList<>();
+        tickets = event.getTickets();
+        Integer counterPayedTickets =0, counterFreeTickets=0;
+        TicketAttendxType attendxType;
+        List<TicketAttendxType> attendxTypeList = new ArrayList<>();
+        for(Ticket t : tickets){
+            attendxType = new TicketAttendxType(t.getAttend().getName(),t.getType());
+            attendxTypeList.add(attendxType);
+            if (t.getType()==TicketType.PAGO)
+            {
+                counterPayedTickets++;
+            }
+            else
+            {
+                counterFreeTickets++;
+            }
+        }
+        return new TicketsConsultaDTO(event.getAmountPayedTickets(),event.getAmountFreeTickets(),counterPayedTickets,counterFreeTickets,attendxTypeList);
+    } 
 }

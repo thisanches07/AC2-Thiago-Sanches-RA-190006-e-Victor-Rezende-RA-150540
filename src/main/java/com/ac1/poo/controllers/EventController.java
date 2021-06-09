@@ -9,6 +9,7 @@ import com.ac1.poo.dto.EventInsertDTO;
 import com.ac1.poo.dto.EventUpdateDTO;
 import com.ac1.poo.dto.TicketDTO;
 import com.ac1.poo.dto.TicketInsertDTO;
+import com.ac1.poo.dto.TicketsConsultaDTO;
 import com.ac1.poo.services.EventService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,6 +91,12 @@ public class EventController {
     TicketDTO ticket = service.insertTicket(ticketDTO, id);
     URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(ticket.getId()).toUri();                                      
     return ResponseEntity.created(uri).body(ticket);                             
+  }
+
+  @GetMapping("/{id}/tickets")
+  public ResponseEntity<TicketsConsultaDTO> getTickets(@PathVariable long id){
+    TicketsConsultaDTO ticket = service.getTickets(id);
+    return ResponseEntity.ok(ticket);
   }
 
   @DeleteMapping("/{id}/places/{idLocal}")
