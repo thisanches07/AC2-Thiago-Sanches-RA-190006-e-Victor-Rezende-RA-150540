@@ -267,7 +267,7 @@ public class EventService {
         event.removeTickets(ticket);
         attend.removeTickets(ticket);
         
-        ticketRepo.deleteById(id);
+        ticketRepo.deleteById(idTicket);
 
         attendRepo.save(attend);
         repo.save(event);
