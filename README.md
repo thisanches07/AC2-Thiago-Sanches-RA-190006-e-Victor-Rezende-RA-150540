@@ -10,6 +10,7 @@ https://poo-ac2-ra-190006-e-150540.herokuapp.com/
 
 
 ## insert
+
 ### admins
 {
     "name":"Vitor",
@@ -42,6 +43,8 @@ https://poo-ac2-ra-190006-e-150540.herokuapp.com/
     "attendId":"10"
 }
 
+
+
 ## update
 
 ### admins
@@ -70,6 +73,8 @@ https://poo-ac2-ra-190006-e-150540.herokuapp.com/
     "priceTicket" : "10.00",
     "adminId":6
 }
+
+
 
 ## delete
 ### tickets
