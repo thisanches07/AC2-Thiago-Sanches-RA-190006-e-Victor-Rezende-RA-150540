@@ -16,7 +16,7 @@ public interface AttendRepository extends JpaRepository <Attend,Long>{
     @Query("SELECT a FROM Attend a ")
     public Page<Attend> find(Pageable pagerequest);
 
-    @Query("SELECT a FROM Admin a WHERE a.email LIKE :email")
+    @Query("SELECT a FROM Attend a WHERE a.email LIKE :email")
     public Optional<Attend> findEmail(String email);
 }
 
