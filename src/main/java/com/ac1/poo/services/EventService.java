@@ -125,7 +125,14 @@ public class EventService {
 
     public void delete(Long id){
         try{
-            repo.deleteById(id);
+            if(repo.getOne(id).getTickets().size()!=0)
+            {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Não é possível excluir o evento, pois ele possui tickets! ");
+            }
+            else
+            {
+                repo.deleteById(id);
+            }
         }
         catch(EmptyResultDataAccessException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found");
