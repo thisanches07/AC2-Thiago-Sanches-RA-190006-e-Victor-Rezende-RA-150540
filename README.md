@@ -1,4 +1,4 @@
-# AC2-Thiago-Sanches-RA-190006-e-Victor-Rezende-RA-150540
+# AF-Thiago-Sanches-RA-190006-e-Victor-Rezende-RA-150540
 
 
 # Feito por:
@@ -10,6 +10,7 @@ https://poo-ac2-ra-190006-e-150540.herokuapp.com/
 
 
 ## insert
+
 ### admins
 {
     "name":"Vitor",
@@ -36,6 +37,13 @@ https://poo-ac2-ra-190006-e-150540.herokuapp.com/
     "priceTicket" : "500.50",
     "adminId":1
 }
+### tickets
+{
+    "type":"GRATUITO",
+    "attendId":"10"
+}
+
+
 
 ## update
 
@@ -64,4 +72,12 @@ https://poo-ac2-ra-190006-e-150540.herokuapp.com/
     "amountPayedTickets" : 20,
     "priceTicket" : "10.00",
     "adminId":6
+}
+
+
+
+## delete
+### tickets
+{
+    "idAttendee":"40"
 }
