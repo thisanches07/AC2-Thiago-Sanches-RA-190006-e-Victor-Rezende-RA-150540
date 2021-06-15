@@ -10,6 +10,7 @@ import com.ac1.poo.dto.EventUpdateDTO;
 import com.ac1.poo.dto.TicketDTO;
 import com.ac1.poo.dto.TicketInsertDTO;
 import com.ac1.poo.dto.TicketsConsultaDTO;
+import com.ac1.poo.entities.RemoveTicket;
 import com.ac1.poo.services.EventService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,10 +107,10 @@ public class EventController {
     return ResponseEntity.created(uri).body(adicionado);     
   }
 
-  @DeleteMapping("/{id}/tickets/{idTicket}")
-  public ResponseEntity<Void> removerTicket(@PathVariable long id, @PathVariable long idTicket)
+  @DeleteMapping("/{id}/tickets")
+  public ResponseEntity<Void> removerTicket(@PathVariable long id, @Valid @RequestBody RemoveTicket removeTicket)
   {
-    service.deleteTicket(id, idTicket);
+    service.deleteTicket(id,removeTicket);
     return ResponseEntity.noContent().build();
   }
 }

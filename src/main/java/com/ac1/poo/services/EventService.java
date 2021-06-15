@@ -20,6 +20,7 @@ import com.ac1.poo.entities.Admin;
 import com.ac1.poo.entities.Attend;
 import com.ac1.poo.entities.Event;
 import com.ac1.poo.entities.Place;
+import com.ac1.poo.entities.RemoveTicket;
 import com.ac1.poo.entities.Ticket;
 import com.ac1.poo.entities.TicketAttendxType;
 import com.ac1.poo.entities.TicketType;
@@ -248,15 +249,22 @@ public class EventService {
         return new TicketDTO(entity);
     }
 
-    public void deleteTicket(long id, long idTicket) {
+    public void deleteTicket(long id, RemoveTicket removeTicket) {
+        long idAttendee = removeTicket.getIdAttendee();
+        Optional<Event> op2 = repo.findById(id);
+        Event event = op2.orElseThrow( () ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "Evento não está cadastrado!"));
+        Optional<Attend> op3 = attendRepo.findById(idAttendee);
+        Attend attend = op3.orElseThrow( () ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "Attend não está cadastrado!"));
+        long variavelTicket = 0;
+        for(Ticket t: repo.getOne(id).getTickets()){
+            if(idAttendee == t.getAttend().getId())
+            {
+                variavelTicket = t.getId();               
+            }
+        }
+        long idTicket = variavelTicket;
         Optional<Ticket> op = ticketRepo.findById(idTicket);
         Ticket ticket = op.orElseThrow( () ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "Ticket não existe!"));
-        Optional<Event> op2 = repo.findById(ticket.getEvent().getId());
-        Event event = op2.orElseThrow( () ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "Evento não está cadastrado!"));
-        Optional<Attend> op3 = attendRepo.findById(ticket.getAttend().getId());
-        Attend attend = op3.orElseThrow( () ->  new ResponseStatusException(HttpStatus.NOT_FOUND, "Attend não está cadastrado!"));
-
-        
 
         if(LocalDate.now().isAfter(event.getStart_date())&&LocalTime.now().isAfter(event.getStart_time()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Não é possível devolver um ingresso depois que o evento começou!" );
