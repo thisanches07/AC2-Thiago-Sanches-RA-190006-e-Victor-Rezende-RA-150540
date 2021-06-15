@@ -25,3 +25,12 @@ INSERT INTO tb_attend (balance,baseuser_id) VALUES ('150',4);
 INSERT INTO tb_attend (balance,baseuser_id) VALUES ('50.50',5);
 INSERT INTO tb_attend (balance,baseuser_id) VALUES ('100',6);
 
+INSERT INTO tb_ticket (date,price,type,attendee_id,event_id) VALUES ('2021-10-11',1.5,0,4,2);
+INSERT INTO tb_ticket (date,price,type,attendee_id,event_id) VALUES ('2021-10-11',1.5,0,5,2);
+INSERT INTO tb_ticket (date,price,type,attendee_id,event_id) VALUES ('2021-10-11',0.0,1,6,2);
+
+INSERT INTO tb_places_events(place_id,event_id) VALUES (1,1);
+INSERT INTO tb_places_events(place_id,event_id) VALUES (2,2);
+INSERT INTO tb_places_events(place_id,event_id) VALUES (3,3);
+
+
