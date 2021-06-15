@@ -10,10 +10,7 @@ import com.ac1.poo.dto.AttendDTO;
 import com.ac1.poo.dto.AttendInsertDTO;
 import com.ac1.poo.dto.AttendUpdateDTO;
 import com.ac1.poo.entities.Attend;
-import com.ac1.poo.entities.Event;
-import com.ac1.poo.entities.Ticket;
 import com.ac1.poo.repositories.AttendRepository;
-import com.ac1.poo.repositories.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
@@ -28,8 +25,6 @@ public class AttendService {
     private AttendRepository repo;
 
 
-    @Autowired
-    private EventRepository repoEvents;
 
     public Page<AttendDTO> getAttendees(PageRequest pageRequest) {
         
@@ -85,16 +80,15 @@ public class AttendService {
 
     public void delete(Long id){
         try{
-                for(Event e: repoEvents.findAll())
-                {
-                    for(Ticket t: e.getTickets())
-                    if(t.getAttend().getId() == id)
+                    if(repo.getOne(id).getTickets().size()!=0)
                     {
                         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Attend possui tickets comprados!");
                     }
+                    else
+                    {
+                        repo.deleteById(id);
+                    }
                 }
-            repo.deleteById(id);
-        }
         catch(EmptyResultDataAccessException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Attend not found");
         }
