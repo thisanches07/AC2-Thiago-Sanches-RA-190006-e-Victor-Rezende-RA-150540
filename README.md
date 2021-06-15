@@ -20,7 +20,7 @@ https://poo-ac2-ra-190006-e-150540.herokuapp.com/
 ### attendees
 {
     "name":"Thiago",
-    "email":"Thiago@email.comm",
+    "email":"Thiago@email.com",
     "balance":"100"
 }
 ### events
@@ -36,6 +36,11 @@ https://poo-ac2-ra-190006-e-150540.herokuapp.com/
     "amountPayedTickets" : 20,
     "priceTicket" : "500.50",
     "adminId":1
+}
+### places
+{
+    "name":"Chacara de Eventos",
+    "address":"Rua 123321"
 }
 ### tickets
 {
@@ -73,7 +78,11 @@ https://poo-ac2-ra-190006-e-150540.herokuapp.com/
     "priceTicket" : "10.00",
     "adminId":6
 }
-
+### places
+{
+    "name" : "Chacara em Sorocaba",
+    "address":"Rua Richard 123"
+}
 
 
 ## delete
