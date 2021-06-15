@@ -14,8 +14,6 @@ import com.ac1.poo.entities.Event;
 import com.ac1.poo.entities.Ticket;
 import com.ac1.poo.repositories.AttendRepository;
 import com.ac1.poo.repositories.EventRepository;
-import com.ac1.poo.repositories.TicketRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
